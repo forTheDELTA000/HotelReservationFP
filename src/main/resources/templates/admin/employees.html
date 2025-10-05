@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+ <title>Employee</title>
+
+ <link rel="shortcut icon" type="image/x-icon" th:href="@{/admin/assets/img/favicon.png}">
+
+ <link rel="stylesheet" th:href="@{/admin/assets/css/bootstrap.min.css}">
+ <link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/all.min.css}">
+
+ <link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/fontawesome.min.css}">
+
+ <link rel="stylesheet" th:href="@{/admin/assets/css/feathericon.min.css}">
+
+ <link rel="stylesheet" th:href="@{/admin/assets/plugins/datatables/datatables.min.css}">
+ <link rel="stylesheet" th:href="@{/admin/assets/plugins/morris/morris.css}">
+ <link rel="stylesheet" type="text/css" th:href="@{/admin/assets/css/bootstrap-datetimepicker.min.css}">
+
+ <link rel="stylesheet" th:href="@{/admin/assets/css/style.css}">
+
+</head>
+<body>
+
+<div class="main-wrapper">
+
+ <div class="header">
+
+  <div class="header-left">
+   <a th:href="@{/dashboard}" class="logo">
+    <img th:src="@{/admin/assets/img/hotel_logo.png}" width="50" height="70" alt="logo">
+    <span class="logoclass">HOTEL</span>
+   </a>
+   <a th:href="@{/dashboard}" class="logo logo-small">
+    <img th:src="@{/admin/assets/img/hotel_logo.png}" alt="Logo" width="30" height="30">
+   </a>
+  </div>
+
+  <a href="javascript:void(0);" id="toggle_btn">
+   <i class="fe fe-text-align-left"></i>
+  </a>
+
+  <a class="mobile_btn" id="mobile_btn">
+   <i class="fas fa-bars"></i>
+  </a>
+
+
+  <ul class="nav user-menu">
+
+   <li class="nav-item dropdown has-arrow">
+    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+     <span class="user-img"><img class="rounded-circle" th:src="@{/admin/assets/img/profiles/avatar-01.jpg}" width="31" alt="Soeng Souy"></span>
+    </a>
+    <div class="dropdown-menu">
+     <div class="user-header">
+      <div class="avatar avatar-sm">
+       <img th:src="@{/admin/assets/img/profiles/avatar-01.jpg}" alt="User Image" class="avatar-img rounded-circle">
+      </div>
+      <div class="user-text">
+       <h6>Soeng Souy</h6>
+       <p class="text-muted mb-0">Administrator</p>
+      </div>
+     </div>
+     <a class="dropdown-item" th:href="@{/profile}">My Profile</a>
+     <a class="dropdown-item" th:href="@{/login}">Logout</a>
+    </div>
+   </li>
+
+  </ul>
+
+ </div>
+
+
+ <div class="sidebar" id="sidebar">
+  <div class="sidebar-inner slimscroll">
+   <div id="sidebar-menu" class="sidebar-menu">
+    <ul>
+     <li>
+      <a th:href="@{/dashboard}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+     </li>
+     <li class="list-divider"></li>
+     <li class="submenu">
+      <a href="#"><i class="fas fa-suitcase"></i> <span> Booking </span> <span class="menu-arrow"></span></a>
+      <ul class="submenu_class" style="display: none;">
+       <li><a th:href="@{/all-booking}"> All Booking </a></li>
+       <li><a th:href="@{/edit-booking}"> Edit Booking </a></li>
+       <li><a th:href="@{/add-booking}"> Add Booking </a></li>
+      </ul>
+     </li>
+     <li class="submenu">
+      <a href="#"><i class="fas fa-user"></i> <span> Customers </span> <span class="menu-arrow"></span></a>
+      <ul class="submenu_class" style="display: none;">
+       <li><a th:href="@{/all-customer}"> All customers </a></li>
+       <li><a th:href="@{/edit-customer}"> Edit Customer </a></li>
+       <li><a th:href="@{/add-customer}"> Add Customer </a></li>
+      </ul>
+     </li>
+     <li class="submenu">
+      <a href="#"><i class="fas fa-key"></i> <span> Rooms </span> <span class="menu-arrow"></span></a>
+      <ul class="submenu_class" style="display: none;">
+       <li><a th:href="@{/all-rooms}">All Rooms </a></li>
+       <li><a th:href="@{/edit-room}"> Edit Rooms </a></li>
+       <li><a th:href="@{/add-room}"> Add Rooms </a></li>
+      </ul>
+     </li>
+     <li class="submenu">
+      <a href="#"><i class="fas fa-user"></i> <span> Staff </span> <span class="menu-arrow"></span></a>
+      <ul class="submenu_class" style="display: none;">
+       <li><a th:href="@{/all-staff}">All Staff </a></li>
+       <li><a th:href="@{/edit-staff}"> Edit Staff </a></li>
+       <li><a th:href="@{/add-staff}"> Add Staff </a></li>
+      </ul>
+     </li>
+     <li>
+      <a th:href="@{/pricing}"><i class="far fa-money-bill-alt"></i> <span>Pricing</span></a>
+     </li>
+     <li class="submenu">
+      <a href="#"><i class="fas fa-user"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
+      <ul class="submenu_class" style="display: none;">
+       <li><a class="active" th:href="@{/employees}">Employees List </a></li>
+      </ul>
+     </li>
+     <li class="submenu">
+      <a href="#"><i class="far fa-money-bill-alt"></i> <span> Accounts </span> <span class="menu-arrow"></span></a>
+      <ul class="submenu_class" style="display: none;">
+       <li><a th:href="@{/payments}">Payments </a></li>
+      </ul>
+     </li>
+     <li class="list-divider"></li>
+    </ul>
+   </div>
+  </div>
+ </div>
+
+
+ <div class="page-wrapper">
+  <div class="content container-fluid">
+   <div class="page-header">
+    <div class="row align-items-center">
+     <div class="col">
+      <div class="mt-5">
+       <h4 class="card-title float-left mt-2">Employee</h4>
+       <a th:href="@{/add-employee}" class="btn btn-primary float-right veiwbutton">Add Employee</a>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-lg-12">
+     <form th:action="@{/employees/search}" method="get">
+      <div class="row formtype">
+       <div class="col-md-3">
+        <div class="form-group">
+         <label>Employee ID</label>
+         <input type="text" class="form-control" id="usr" name="employeeId">
+        </div>
+       </div> <div class="col-md-3">
+       <div class="form-group">
+        <label>Employee Name</label>
+        <input type="text" class="form-control" id="usr1" name="employeeName">
+       </div>
+      </div>
+       <div class="col-md-3">
+        <div class="form-group">
+         <label>Role</label>
+         <select class="form-control" id="sel1" name="role">
+          <option>Admin</option>
+          <option>Manager</option>
+          <option>Staff</option>
+          <option>Accountant</option>
+         </select>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="form-group">
+         <label>Search</label>
+         <button type="submit" class="btn btn-success btn-block mt-0 search_button"> Search </button>
+        </div>
+       </div>
+      </div>
+     </form>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-sm-12">
+     <div class="card">
+      <div class="card-body">
+       <div class="table-responsive">
+        <table class="datatable table table-stripped">
+         <thead>
+         <tr>
+          <th>Name</th>
+          <th>Employee ID</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Join Date</th>
+          <th>role</th>
+          <th class="text-right">Actions</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr>
+          <td>Albina Simonis</td>
+          <td>Ma-0001</td>
+          <td>albina.simonis@example.com</td>
+          <td>828-634-2744</td>
+          <td>7 May 2015</td>
+          <td>
+           <span class="custom-badge status-green">Manager</span>
+          </td>
+          <td class="text-right">
+           <div class="dropdown dropdown-action">
+            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+             <a class="dropdown-item" th:href="@{/edit-employee}"><i class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_asset"><i class="fas fa-trash-alt m-r-5"></i> Delete</a>
+            </div>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>Cristina Groves</td>
+          <td>SF-0001</td>
+          <td>cristina.groves@example.com</td>
+          <td>928-344-5176</td>
+          <td>1 Jan 2013</td>
+          <td>Staff</td>
+          <td class="text-right">
+           <div class="dropdown dropdown-action">
+            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+             <a class="dropdown-item" th:href="@{/edit-employee}"><i class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_asset"><i class="fas fa-trash-alt m-r-5"></i> Delete</a>
+            </div>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>Mary Mericle</td>
+          <td>SF-0003</td>
+          <td>mary.mericle@example.com</td>
+          <td>603-831-4983</td>
+          <td>27 Dec 2017</td>
+          <td>Accountant</td>
+          <td class="text-right">
+           <div class="dropdown dropdown-action">
+            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+             <a class="dropdown-item" th:href="@{/edit-employee}"><i class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_asset"><i class="fas fa-trash-alt m-r-5"></i> Delete</a>
+            </div>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>Haylie Feeney</td>
+          <td>SF-0002</td>
+          <td>haylie.feeney@example.com</td>
+          <td>616-774-4962</td>
+          <td>21 Apr 2017</td>
+          <td>Room Maintainers</td>
+          <td class="text-right">
+           <div class="dropdown dropdown-action">
+            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+             <a class="dropdown-item" th:href="@{/edit-employee}"><i class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_asset"><i class="fas fa-trash-alt m-r-5"></i> Delete</a>
+            </div>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>Zoe Butler</td>
+          <td>SF-0001</td>
+          <td>zoe.butler@example.com</td>
+          <td>444-555-9999</td>
+          <td>19 May 2012</td>
+          <td>Receptionist</td>
+          <td class="text-right">
+           <div class="dropdown dropdown-action">
+            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+             <a class="dropdown-item" th:href="@{/edit-employee}"><i class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_asset"><i class="fas fa-trash-alt m-r-5"></i> Delete</a>
+            </div>
+           </div>
+          </td>
+         </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div id="delete_asset" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+     <div class="modal-content">
+      <div class="modal-body text-center">
+       <img th:src="@{/admin/assets/img/sent.png}" alt="" width="50" height="46">
+       <h3 class="delete_class">Are you sure want to delete this Asset?</h3>
+       <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+
+</div>
+
+
+<script th:src="@{/admin/assets/js/jquery-3.5.1.min.js}"></script>
+
+<script th:src="@{/admin/assets/js/popper.min.js}"></script>
+<script th:src="@{/admin/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/admin/assets/js/moment.min.js}"></script>
+<script th:src="@{/admin/assets/js/select2.min.js}"></script>
+
+<script th:src="@{/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/admin/assets/js/bootstrap-datetimepicker.min.js}"></script>
+
+<script th:src="@{/admin/assets/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/admin/assets/plugins/datatables/datatables.min.js}"></script>
+
+<script th:src="@{/admin/assets/js/script.js}"></script>
+<script>
+ $(function () {
+  $('#datetimepicker3').datetimepicker({
+   format: 'LT'
+
+  });
+ });
+</script>
+</body>
+</html>

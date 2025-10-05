@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Rooms</title>
+
+    <link rel="icon" th:href="@{/main/img/core-img/favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/main/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/classy-nav.css}">
+    <link rel="stylesheet" th:href="@{/main/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/main/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/main/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/main/css/travel-icon.css}">
+
+    <link rel="stylesheet" th:href="@{/main/css/style.css}">
+
+</head>
+
+<body>
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="cssload-container">
+        <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+    </div>
+</div>
+
+<header class="header-area">
+    <div class="palatin-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <nav class="classy-navbar justify-content-between" id="palatinNav">
+
+                    <a th:href="@{/static}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <div class="classy-menu">
+
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <div class="classynav">
+                            <ul>
+                                <li><a th:href="@{/index}">Home</a></li>
+                                <li><a th:href="@{/about-us}">About Us</a></li>
+                                <li><a href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a th:href="@{/index}">Home</a></li>
+                                        <li><a th:href="@{/about-us}">About Us</a></li>
+                                        <li><a th:href="@{/services}">Services</a></li>
+                                        <li><a th:href="@{/rooms}">Rooms</a></li>
+                                        <li><a th:href="@{/contact}">Contact</a></li>
+                                    </ul>
+                                </li>
+                                <li><a th:href="@{/services}">Services</a></li>
+                                <li class="active"><a th:href="@{/rooms}">Rooms</a></li>
+                                <li><a th:href="@{/contact}">Contact</a></li>
+                            </ul>
+
+                            <div class="menu-btn">
+                                <a href="#" class="btn palatin-btn">Make a Reservation</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="breadcumb-area bg-img d-flex align-items-center justify-content-center" th:style="'background-image: url(' + @{/main/img/bg-img/bg-6.jpg} + ');'">
+    <div class="bradcumbContent">
+        <h2>Rooms</h2>
+    </div>
+</section>
+
+<section class="rooms-area section-padding-0-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6">
+                <div class="section-heading text-center">
+                    <div class="line-"></div>
+                    <h2>Choose a room</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque, at rutrum nulla dictum. Ut ac ligula sapien.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/1.jpg} + ');'"></div>
+                    <p class="price-from">From $150/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Deluxe Room</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/8.jpg} + ');'"></div>
+                    <p class="price-from">From $150/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Double Suite</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/9.jpg} + ');'"></div>
+                    <p class="price-from">From $100/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Single Room</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/15.jpg} + ');'"></div>
+                    <p class="price-from">From $150/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Deluxe Room</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/16.jpg} + ');'"></div>
+                    <p class="price-from">From $150/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Double Suite</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/17.jpg} + ');'"></div>
+                    <p class="price-from">From $100/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Single Room</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/18.jpg} + ');'"></div>
+                    <p class="price-from">From $150/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Deluxe Room</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/19.jpg} + ');'"></div>
+                    <p class="price-from">From $150/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Double Suite</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/20.jpg} + ');'"></div>
+                    <p class="price-from">From $100/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Single Room</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                    </div>
+                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="pagination-area wow fadeInUp" data-wow-delay="400ms">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item active"><a class="page-link" href="#">01.</a></li>
+                            <li class="page-item"><a class="page-link" href="#">02.</a></li>
+                            <li class="page-item"><a class="page-link" href="#">03.</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<footer class="footer-area">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-lg-5">
+                <div class="footer-widget-area mt-50">
+                    <a th:href="@{/static}" class="d-block mb-5"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="footer-widget-area mt-50">
+                    <h6 class="widget-title mb-5">Find us on the map</h6>
+                    <img th:src="@{/main/img/bg-img/footer-map.png}" alt="">
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="footer-widget-area mt-50">
+                    <h6 class="widget-title mb-5">Subscribe to our newsletter</h6>
+                    <form action="#" method="post" class="subscribe-form">
+                        <input type="email" name="subscribe-email" id="subscribeemail" placeholder="Your E-mail">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="copywrite-text mt-30">
+                    <p><a href="#">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/main/js/jquery/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/main/js/bootstrap/popper.min.js}"></script>
+<script th:src="@{/main/js/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/main/js/plugins/plugins.js}"></script>
+<script th:src="@{/main/js/active.js}"></script>
+</body>
+
+</html>

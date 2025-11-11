@@ -1,210 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-	<title>Add Booking</title>
-	<link rel="shortcut icon" type="image/x-icon" th:href="@{/admin/assets/img/favicon.png}">
-	<link rel="stylesheet" th:href="@{/admin/assets/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/fontawesome.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/all.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/assets/css/feathericon.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/assets/plugins/morris/morris.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/admin/assets/css/bootstrap-datetimepicker.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/assets/css/style.css}"> </head>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title th:text="${pageTitle}">Add Booking</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/admin/assets/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/admin/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/fontawesome.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/css/feathericon.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/admin/assets/css/bootstrap-datetimepicker.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/css/style.css}">
+</head>
 <body>
 <div class="main-wrapper">
-	<div class="header">
-		<div class="header-left">
-			<a th:href="@{/dashboard}" class="logo"> <img th:src="@{/admin/assets/img/hotel_logo.png}" width="50" height="70" alt="logo"> <span class="logoclass">HOTEL</span> </a>
-			<a th:href="@{/dashboard}" class="logo logo-small"> <img th:src="@{/admin/assets/img/hotel_logo.png}" alt="Logo" width="30" height="30"> </a>
-		</div>
-		<a href="javascript:void(0);" id="toggle_btn"> <i class="fe fe-text-align-left"></i> </a>
-		<a class="mobile_btn" id="mobile_btn"> <i class="fas fa-bars"></i> </a>
-		<ul class="nav user-menu">
-			<li class="nav-item dropdown has-arrow">
-				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img class="rounded-circle" th:src="@{/admin/assets/img/profiles/avatar-01.jpg}" width="31" alt="Soeng Souy"></span> </a>
-				<div class="dropdown-menu">
-					<div class="user-header">
-						<div class="avatar avatar-sm"> <img th:src="@{/admin/assets/img/profiles/avatar-01.jpg}" alt="User Image" class="avatar-img rounded-circle"> </div>
-						<div class="user-text">
-							<h6>Soeng Souy</h6>
-							<p class="text-muted mb-0">Administrator</p>
-						</div>
-					</div>
-					<a class="dropdown-item" th:href="@{/profile}">My Profile</a>
-					<a class="dropdown-item" th:href="@{/login}">Logout</a>
-				</div>
-			</li>
-		</ul>
-	</div>
-	<div class="sidebar" id="sidebar">
-		<div class="sidebar-inner slimscroll">
-			<div id="sidebar-menu" class="sidebar-menu">
-				<ul>
-					<li> <a th:href="@{/dashboard}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
-					<li class="list-divider"></li>
-					<li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Booking </span> <span class="menu-arrow"></span></a>
-						<ul class="submenu_class" style="display: none;">
-							<li><a th:href="@{/all-booking}"> All Booking </a></li>
-							<li><a th:href="@{/edit-booking}"> Edit Booking </a></li>
-							<li><a class="active" th:href="@{/add-booking}"> Add Booking </a></li>
-						</ul>
-					</li>
-					<li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Customers </span> <span class="menu-arrow"></span></a>
-						<ul class="submenu_class" style="display: none;">
-							<li><a th:href="@{/all-customer}"> All customers </a></li>
-							<li><a th:href="@{/edit-customer}"> Edit Customer </a></li>
-							<li><a th:href="@{/add-customer}"> Add Customer </a></li>
-						</ul>
-					</li>
-					<li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Rooms </span> <span class="menu-arrow"></span></a>
-						<ul class="submenu_class" style="display: none;">
-							<li><a th:href="@{/all-rooms}">All Rooms </a></li>
-							<li><a th:href="@{/edit-room}"> Edit Rooms </a></li>
-							<li><a th:href="@{/add-room}"> Add Rooms </a></li>
-						</ul>
-					</li>
-					<li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Staff </span> <span class="menu-arrow"></span></a>
-						<ul class="submenu_class" style="display: none;">
-							<li><a th:href="@{/all-staff}">All Staff </a></li>
-							<li><a th:href="@{/edit-staff}"> Edit Staff </a></li>
-							<li><a th:href="@{/add-staff}"> Add Staff </a></li>
-						</ul>
-					</li>
-					<li> <a th:href="@{/pricing}"><i class="far fa-money-bill-alt"></i> <span>Pricing</span></a> </li>
-					<li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
-						<ul class="submenu_class" style="display: none;">
-							<li><a th:href="@{/employees}">Employees List </a></li>
-						</ul>
-					</li>
-					<li class="submenu"> <a href="#"><i class="far fa-money-bill-alt"></i> <span> Accounts </span> <span class="menu-arrow"></span></a>
-						<ul class="submenu_class" style="display: none;">
-							<li><a th:href="@{/payments}">Payments </a></li>
-						</ul>
-					</li>
-					<li class="list-divider"></li>
-					<li class="list-divider"></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="page-wrapper">
-		<div class="content container-fluid">
-			<div class="page-header">
-				<div class="row align-items-center">
-					<div class="col">
-						<h3 class="page-title mt-5">Add Booking</h3> </div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<form th:action="@{/bookings/create}" method="post">
-						<div class="row formtype">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Booking ID</label>
-									<input class="form-control" type="text" value="BKG-0001"> </div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Name</label>
-									<select class="form-control" id="sel1" name="sellist1">
-										<option>Select</option>
-										<option>Jennifer Robinson</option>
-										<option>Terry Baker</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Room Type</label>
-									<select class="form-control" id="sel2" name="sellist1">
-										<option>Select</option>
-										<option>Single</option>
-										<option>Double</option>
-										<option>Quad</option>
-										<option>King</option>
-										<option>Suite</option>
-										<option>Villa</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Total Members</label>
-									<select class="form-control" id="sel3" name="sellist1">
-										<option>Select</option>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Date</label>
-									<div class="cal-icon">
-										<input type="text" class="form-control datetimepicker"> </div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Time</label>
-									<div class="time-icon">
-										<input type="text" class="form-control" id="datetimepicker3"> </div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Arrival Date</label>
-									<div class="cal-icon">
-										<input type="text" class="form-control datetimepicker"> </div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Depature Date</label>
-									<div class="cal-icon">
-										<input type="text" class="form-control datetimepicker"> </div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Email ID</label>
-									<input type="text" class="form-control" id="usr"> </div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Phone Number</label>
-									<input type="text" class="form-control" id="usr1"> </div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>File Upload</label>
-									<div class="custom-file mb-3">
-										<input type="file" class="custom-file-input" id="customFile" name="filename">
-										<label class="custom-file-label" for="customFile">Choose file</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Message</label>
-									<textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-								</div>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary buttonedit1">Create Booking</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div th:replace="~{admin/fragments/header :: header}"></div>
+    <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
+
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="page-header"></div>
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <span th:text="${error}"></span>
+                    </div>
+
+                    <form th:action="${bookingId == null} ? @{/save-booking} : @{/update-booking/{id}(id=${bookingId})}"
+                          th:object="${bookingRequest}"
+                          method="post">
+                        <div class="row formtype">
+
+                            <div class="col-md-4"><div class="form-group"><label>Guest First Name</label><input class="form-control" type="text" th:field="*{guestFirstName}" required></div></div>
+                            <div class="col-md-4"><div class="form-group"><label>Guest Last Name</label><input class="form-control" type="text" th:field="*{guestLastName}" required></div></div>
+                            <div class="col-md-4"><div class="form-group"><label>Email ID</label><input type="email" class="form-control" th:field="*{guestEmail}" required></div></div>
+                            <div class="col-md-4"><div class="form-group"><label>Phone Number</label><input type="text" class="form-control" th:field="*{guestPhone}" required></div></div>
+
+                            <div class="col-md-4"><div class="form-group"><label>Room Type</label><select class="form-control" th:field="*{roomTypeId}" required><option value="">Select Room Type</option><option th:each="type : ${roomTypes}" th:value="${type.roomTypeId}" th:text="${type.name}"></option></select></div></div>
+                            <div class="col-md-4"><div class="form-group"><label>Total Members</label><select class="form-control" th:field="*{numGuests}" required><option value="">Select</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div></div>
+                            <div class="col-md-4"><div class="form-group"><label>Arrival Date</label><div class="cal-icon"><input type="text" class="form-control datetimepicker" th:field="*{checkInDate}" required></div></div></div>
+                            <div class="col-md-4"><div class="form-group"><label>Departure Date</label><div class="cal-icon"><input type="text" class="form-control datetimepicker" th:field="*{checkOutDate}" required></div></div></div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                    <select class="form-control" th:field="*{paymentMethod}">
+                                        <option value="N/A">N/A (Pending)</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit Card (Manual)">Credit Card (Manual)</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Payment Status</label>
+                                    <select class="form-control" th:field="*{paymentStatus}" required>
+                                        <option value="Pending">Pending (Pay Later)</option>
+                                        <option value="Paid">Paid</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Message</label>
+                                    <textarea class="form-control" rows="3" th:field="*{message}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary buttonedit1">Save</button>
+                        <a th:href="@{/all-booking}" class="btn btn-secondary buttonedit1">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script th:src="@{/admin/assets/js/jquery-3.5.1.min.js}"></script>
 <script th:src="@{/admin/assets/js/popper.min.js}"></script>
@@ -212,15 +83,6 @@
 <script th:src="@{/admin/assets/js/moment.min.js}"></script>
 <script th:src="@{/admin/assets/js/bootstrap-datetimepicker.min.js}"></script>
 <script th:src="@{/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-<script th:src="@{/admin/assets/plugins/raphael/raphael.min.js}"></script>
 <script th:src="@{/admin/assets/js/script.js}"></script>
-<script>
-	$(function() {
-		$('#datetimepicker3').datetimepicker({
-			format: 'LT'
-		});
-	});
-</script>
 </body>
-
 </html>

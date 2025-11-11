@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>All Customers</title>
+    <title>All Physical Rooms</title>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/admin/assets/img/favicon.png}">
     <link rel="stylesheet" th:href="@{/admin/assets/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/admin/assets/plugins/fontawesome/css/all.min.css}">
@@ -16,60 +17,45 @@
 <div class="main-wrapper">
 
     <div th:replace="~{admin/fragments/header :: header}"></div>
+
     <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
 
     <div class="page-wrapper">
         <div class="content container-fluid">
-
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">All Customers</h4>
-                            <a th:href="@{/add-customer}" class="btn btn-primary float-right veiwbutton">Add Customer</a>
+                            <h4 class="card-title float-left mt-2">Physical Rooms</h4>
+                            <a th:href="@{/add-physical-room}" class="btn btn-primary float-right veiwbutton">Add Physical Room</a>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card card-table">
                         <div class="card-body booking_card">
                             <div class="table-responsive">
-                                <table class="datatable table table-striped table-hover table-center mb-0">
+                                <table class="datatable table table-stripped table table-hover table-center mb-0">
                                     <thead>
                                     <tr>
-                                        <th>Guest ID</th>
-                                        <th>Name</th>
-                                        <th>Email ID</th>
-                                        <th>Phone Number</th>
+                                        <th>Room Number</th>
+                                        <th>Room Type</th>
+                                        <th>Status</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="guest : ${guests}">
-                                        <td th:text="${'CUST-' + guest.guestId}">CUST-0001</td>
-
-                                        <td th:text="${guest.firstName + ' ' + guest.lastName}">
-                                            Guest Name
-                                        </td>
-                                        <td th:text="${guest.email}">guest@email.com</td>
-                                        <td th:text="${guest.phone}">123-456-7890</td>
+                                    <tr th:each="room : ${rooms}">
+                                        <td th:text="${room.roomNumber}">101</td>
+                                        <td th:text="${room.roomType.name}">Deluxe Room</td>
+                                        <td th:text="${room.status}">Available</td>
                                         <td class="text-right">
-                                            <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v ellipse_color"></i>
-                                                </a>
+                                            <div class="dropdown dropdown-action"> <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" th:href="@{/edit-customer/{id}(id=${guest.guestId})}">
-                                                        <i class="fas fa-pencil-alt m-r-5"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item"
-                                                       th:href="@{/delete-customer/{id}(id=${guest.guestId})}"
-                                                       onclick="return confirm('Are you sure? This may fail if they have bookings.');">
-                                                        <i class="fas fa-trash-alt m-r-5"></i> Delete
-                                                    </a>
+                                                    <a class="dropdown-item" th:href="@{/edit-physical-room/{id}(id=${room.roomId})}"><i class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item" th:href="@{/delete-physical-room/{id}(id=${room.roomId})}" onclick="return confirm('Are you sure you want to delete this room?');"><i class="fas fa-trash-alt m-r-5"></i> Delete</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -81,11 +67,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
 <script th:src="@{/admin/assets/js/jquery-3.5.1.min.js}"></script>
 <script th:src="@{/admin/assets/js/popper.min.js}"></script>
 <script th:src="@{/admin/assets/js/bootstrap.min.js}"></script>

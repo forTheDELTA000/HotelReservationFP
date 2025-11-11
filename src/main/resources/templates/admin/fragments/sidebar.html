@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fragment</title>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar" th:fragment="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li> <a th:href="@{/dashboard}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
+                <li class="list-divider"></li>
+                <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Booking </span> <span class="menu-arrow"></span></a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a th:href="@{/all-booking}"> All Booking </a></li>
+                        <li><a th:href="@{/add-booking}"> Add Booking </a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Customers </span> <span class="menu-arrow"></span></a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a th:href="@{/all-customer}"> All customers </a></li>
+                        <li><a th:href="@{/add-customer}"> Add Customer </a></li>
+                    </ul>
+                </li>
+
+                <li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Room Types </span> <span class="menu-arrow"></span></a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a th:href="@{/all-rooms}">All Room Types </a></li>
+                        <li><a th:href="@{/add-room}"> Add Room Type </a></li>
+                    </ul>
+                </li>
+
+                <li class="submenu"> <a href="#"><i class="fas fa-door-open"></i> <span> Physical Rooms </span> <span class="menu-arrow"></span></a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a th:href="@{/physical-rooms}">All Physical Rooms </a></li>
+                        <li><a th:href="@{/add-physical-room}"> Add Physical Room </a></li>
+                    </ul>
+                </li>
+
+                <li class="submenu"> <a href="#"><i class="far fa-money-bill-alt"></i> <span> Accounts </span> <span class="menu-arrow"></span></a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a th:href="@{/payments}">Payments </a></li>
+                    </ul>
+                </li>
+                <li class="list-divider"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

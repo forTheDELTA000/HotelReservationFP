@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reservation</title>
+
+    <link rel="icon" th:href="@{/main/img/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/main/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/classy-nav.css}">
+    <link rel="stylesheet" th:href="@{/main/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/main/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/main/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/main/css/travel-icon.css}">
+    <link rel="stylesheet" th:href="@{/main/css/style.css}">
+
+    <style>
+        .price-calculator {
+            border: 2px solid #cb8670;
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .price-calculator h3 {
+            color: #cb8670;
+            font-weight: bold;
+        }
+        .price-calculator ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+        .price-calculator li {
+            font-size: 16px;
+            color: #363636;
+        }
+        .total-price {
+            font-size: 28px !important;
+            color: #363636 !important;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .contact-form-area label {
+            color: #cb8670;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #c9c9c9;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-style: italic;
+            color: #7d7d7d;
+            border-radius: 0;
+            width: 100%;
+            height: 52px;
+            padding-left: 0;
+        }
+        .form-control:focus {
+            border-color: #cb8670;
+            box-shadow: none;
+        }
+        select.form-control {
+            height: 52px;
+        }
+        textarea.form-control {
+            height: 120px;
+        }
+    </style>
+</head>
+
+<body>
+
+<section class="contact-form-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center">
+                    <div class="line-"></div>
+                    <h2>Book Your Reservation</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <form th:action="@{/process-booking}" th:object="${bookingRequest}" method="post" id="reservationForm">
+
+                    <h4 class="mb-30">Guest Information</h4>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" th:field="*{firstName}" class="form-control" placeholder="John" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" th:field="*{lastName}" class="form-control" placeholder="Doe" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="john.doe@example.com" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" th:field="*{phone}" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-50 mb-30">Booking Information</h4>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="checkIn">Check-In Date</label>
+                            <input type="date" id="checkIn" th:field="*{checkInDate}" class="form-control" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="checkOut">Check-Out Date</label>
+                            <input type="date" id="checkOut" th:field="*{checkOutDate}" class="form-control" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="numGuests">Number of Guests</label>
+                            <input type="number" id="numGuests" th:field="*{numGuests}" class="form-control" value="1" min="1" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="roomType">Room Type</label>
+                            <select id="roomType" th:field="*{roomType}" class="form-control" required>
+                                <option value="" selected disabled>Choose room type...</option>
+                                <option value="Single">Single ($10)</option>
+                                <option value="Double Suite">Double Suite ($20)</option>
+                                <option value="Deluxe">Deluxe ($30)</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="message">Special Requests/Message</label>
+                            <textarea id="message" th:field="*{message}" class="form-control" placeholder="Any special requests..."></textarea>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-50 mb-30">Payment Method</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payCreditCard" value="CreditCard" required>
+                                <label class="form-check-label" for="payCreditCard">
+                                    Credit Card
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payPayPal" value="PayPal">
+                                <label class="form-check-label" for="payPayPal">
+                                    PayPal
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="price-calculator">
+                                <h3>Price Breakdown</h3>
+                                <ul>
+                                    <li id="guestCostText">Guest Cost: $0.00</li>
+                                    <li id="nightCostText">Nightly Cost: $0.00</li>
+                                    <li id="roomCostText">Room Cost: $0.00</li>
+                                </ul>
+                                <h3 class="total-price">Total: <span id="totalPriceDisplay">$0.00</span></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-center mt-50">
+                            <button type="submit" class="palatin-btn">Book Now</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const PRICE_PER_GUEST = 15;
+        const PRICE_PER_NIGHT = 10;
+        const ROOM_PRICES = {
+            'Single': 10,
+            'Double Suite': 20,
+            'Deluxe': 30,
+            '': 0
+        };
+
+        const checkInEl = document.getElementById('checkIn');
+        const checkOutEl = document.getElementById('checkOut');
+        const numGuestsEl = document.getElementById('numGuests');
+        const roomTypeEl = document.getElementById('roomType');
+
+        const guestCostTextEl = document.getElementById('guestCostText');
+        const nightCostTextEl = document.getElementById('nightCostText');
+        const roomCostTextEl = document.getElementById('roomCostText');
+        const totalPriceEl = document.getElementById('totalPriceDisplay');
+
+        function calculateTotal() {
+            const guestCount = parseInt(numGuestsEl.value) || 0;
+            const guestCost = guestCount * PRICE_PER_GUEST;
+
+            let nights = 0;
+            const date1 = new Date(checkInEl.value);
+            const date2 = new Date(checkOutEl.value);
+
+            if (checkInEl.value && checkOutEl.value && date2 > date1) {
+                const diffTime = Math.abs(date2 - date1);
+                nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            }
+            const nightCost = nights * PRICE_PER_NIGHT;
+
+            const roomType = roomTypeEl.value;
+            const roomCost = ROOM_PRICES[roomType] || 0;
+            const roomName = roomType || 'N/A';
+
+            const totalCost = guestCost + nightCost + roomCost;
+
+            guestCostTextEl.textContent = `Guest Cost: ${guestCount} guest(s) at $15/each = $${guestCost.toFixed(2)}`;
+            nightCostTextEl.textContent = `Nightly Cost: ${nights} night(s) at $10/night = $${nightCost.toFixed(2)}`;
+            roomCostTextEl.textContent = `Room Cost: ${roomName} = $${roomCost.toFixed(2)}`;
+            totalPriceEl.textContent = `$${totalCost.toFixed(2)}`;
+        }
+
+        const inputsToWatch = [checkInEl, checkOutEl, numGuestsEl, roomTypeEl];
+        inputsToWatch.forEach(input => {
+            input.addEventListener('change', calculateTotal);
+        });
+
+        calculateTotal();
+    });
+</script>
+</body>
+
+</html>

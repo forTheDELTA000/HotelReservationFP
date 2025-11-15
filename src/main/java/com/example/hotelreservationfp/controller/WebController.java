@@ -60,6 +60,10 @@ public class WebController {
     public String getServicesPage() {
         return "main/services";
     }
+    @GetMapping("/bookreservation")
+    public String getBookingPage() {
+        return "main/bookreservation";
+    }
 
     // --- Admin Login/Dashboard ---
     @GetMapping("/login")

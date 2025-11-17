@@ -7,9 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Rooms</title>
-
     <link rel="icon" th:href="@{/main/img/core-img/favicon.ico}">
-
     <link rel="stylesheet" th:href="@{/main/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/main/css/classy-nav.css}">
     <link rel="stylesheet" th:href="@{/main/css/owl.carousel.min.css}">
@@ -18,9 +16,7 @@
     <link rel="stylesheet" th:href="@{/main/css/font-awesome.min.css}">
     <link rel="stylesheet" th:href="@{/main/css/nice-select.css}">
     <link rel="stylesheet" th:href="@{/main/css/travel-icon.css}">
-
     <link rel="stylesheet" th:href="@{/main/css/style.css}">
-
 </head>
 
 <body>
@@ -35,41 +31,25 @@
         <div class="classy-nav-container breakpoint-off">
             <div class="container">
                 <nav class="classy-navbar justify-content-between" id="palatinNav">
-
-                    <a th:href="@{/static}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
-
+                    <a th:href="@{/index}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
                     <div class="classy-navbar-toggler">
                         <span class="navbarToggler"><span></span><span></span><span></span></span>
                     </div>
-
                     <div class="classy-menu">
-
                         <div class="classycloseIcon">
                             <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                         </div>
-
                         <div class="classynav">
                             <ul>
                                 <li><a th:href="@{/index}">Home</a></li>
                                 <li><a th:href="@{/about-us}">About Us</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a th:href="@{/index}">Home</a></li>
-                                        <li><a th:href="@{/about-us}">About Us</a></li>
-                                        <li><a th:href="@{/services}">Services</a></li>
-                                        <li><a th:href="@{/rooms}">Rooms</a></li>
-                                        <li><a th:href="@{/contact}">Contact</a></li>
-                                    </ul>
-                                </li>
                                 <li><a th:href="@{/services}">Services</a></li>
                                 <li class="active"><a th:href="@{/rooms}">Rooms</a></li>
                                 <li><a th:href="@{/contact}">Contact</a></li>
                             </ul>
-
                             <div class="menu-btn">
                                 <a th:href="@{/bookreservation}" class="btn palatin-btn">Make a Reservation</a>
                             </div>
-
                         </div>
                     </div>
                 </nav>
@@ -97,120 +77,24 @@
 
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4" th:each="roomType : ${roomTypes}">
                 <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/1.jpg} + ');'"></div>
-                    <p class="price-from">From $150/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Deluxe Room</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/8.jpg} + ');'"></div>
-                    <p class="price-from">From $150/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Double Suite</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
+                    <div class="bg-thumbnail bg-img"
+                         th:style="'background-image: url(' + ${roomType.imageUrl} + ');'"></div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/9.jpg} + ');'"></div>
-                    <p class="price-from">From $100/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Single Room</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
+                    <p class="price-from"
+                       th:text="${'From $' + #numbers.formatDecimal(roomType.pricePerNight, 0, 'COMMA', 0, 'POINT') + '/night'}">
+                        From $150/night
+                    </p>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/15.jpg} + ');'"></div>
-                    <p class="price-from">From $150/night</p>
                     <div class="rooms-text">
                         <div class="line"></div>
-                        <h4>Deluxe Room</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
+                        <h4 th:text="${roomType.name}">Deluxe Room</h4>
+                        <p th:text="${#strings.abbreviate(roomType.description, 70)}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/16.jpg} + ');'"></div>
-                    <p class="price-from">From $150/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Double Suite</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/17.jpg} + ');'"></div>
-                    <p class="price-from">From $100/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Single Room</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/18.jpg} + ');'"></div>
-                    <p class="price-from">From $150/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Deluxe Room</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/19.jpg} + ');'"></div>
-                    <p class="price-from">From $150/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Double Suite</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/20.jpg} + ');'"></div>
-                    <p class="price-from">From $100/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Single Room</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque.</p>
-                    </div>
-                    <a href="#" class="book-room-btn btn palatin-btn">Book Room</a>
+                    <a th:href="@{/bookreservation}" class="book-room-btn btn palatin-btn">Book Room</a>
                 </div>
             </div>
 
@@ -229,13 +113,14 @@
         </div>
     </div>
 </section>
+
 <footer class="footer-area">
     <div class="container">
         <div class="row">
 
             <div class="col-12 col-lg-5">
                 <div class="footer-widget-area mt-50">
-                    <a th:href="@{/static}" class="d-block mb-5"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+                    <a th:href="@{/index}" class="d-block mb-5"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </p>
                 </div>
             </div>
@@ -259,7 +144,7 @@
 
             <div class="col-12">
                 <div class="copywrite-text mt-30">
-                    <p><a href="#">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <p><a href="#">Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                     </p>
                 </div>
             </div>

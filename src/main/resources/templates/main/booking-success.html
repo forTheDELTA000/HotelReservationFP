@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <link rel="icon" th:href="@{/main/img/core-img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/main/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/style.css}">
+    <style>
+        .receipt-box {
+            background: #fff;
+            padding: 40px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-top: 5px solid #cb8670;
+        }
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .receipt-header h2 {
+            color: #cb8670;
+            margin-bottom: 10px;
+        }
+        .receipt-details h5 {
+            color: #333;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #f5f5f5;
+            padding-bottom: 5px;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #333;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #cb8670;
+        }
+        .status-badge {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            vertical-align: middle;
+        }
+        @media print {
+            .no-print { display: none; }
+            .receipt-box { box-shadow: none; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="cssload-container">
+        <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+    </div>
+</div>
+
+<header class="header-area">
+    <div class="palatin-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <nav class="classy-navbar justify-content-between" id="palatinNav">
+                    <a th:href="@{/index}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+                    <div class="classy-menu">
+                        <div class="classynav">
+                            <ul>
+                                <li><a th:href="@{/index}">Home</a></li>
+                            </ul>
+                            <div class="menu-btn">
+                                <a th:href="@{/bookreservation}" class="btn palatin-btn">New Booking</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <div class="receipt-box">
+                <div class="receipt-header">
+                    <img th:src="@{/main/img/core-img/logo.png}" alt="" style="max-height: 50px; margin-bottom: 15px;">
+                    <h2>Booking Confirmed!</h2>
+                    <p>Thank you for choosing Palatin Hotel.</p>
+                    <p>Booking ID: <strong th:text="${'#' + booking.bookingId}">#123</strong></p>
+                </div>
+
+                <div class="receipt-details">
+                    <h5>Guest Details</h5>
+                    <div class="receipt-row">
+                        <span>Name:</span>
+                        <span th:text="${booking.guest.firstName + ' ' + booking.guest.lastName}">John Doe</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Email:</span>
+                        <span th:text="${booking.guest.email}">john@example.com</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Phone:</span>
+                        <span th:text="${booking.guest.phone}">123-456-7890</span>
+                    </div>
+
+                    <h5>Reservation Details</h5>
+                    <div class="receipt-row">
+                        <span>Room Type:</span>
+                        <span th:text="${booking.room.roomType.name}">Deluxe Room</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Room Number:</span>
+                        <span th:text="${booking.room.roomNumber}">101</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Check-In:</span>
+                        <span th:text="${#temporals.format(booking.checkInDate, 'dd MMM yyyy')}">01 Jan 2025</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Check-Out:</span>
+                        <span th:text="${#temporals.format(booking.checkOutDate, 'dd MMM yyyy')}">05 Jan 2025</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Guests:</span>
+                        <span th:text="${booking.numGuests}">2</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Status:</span>
+                        <span class="status-badge" th:text="${booking.status}">Confirmed</span>
+                    </div>
+
+                    <h5>Payment Info</h5>
+                    <div class="receipt-row">
+                        <span>Method:</span>
+                        <span th:text="${booking.payment.paymentMethod}">Credit Card</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Payment Status:</span>
+                        <strong th:text="${booking.payment.status}">Paid</strong>
+                    </div>
+
+                    <div class="total-row">
+                        <span>Total Price:</span>
+                        <span th:text="${'$' + #numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 2, 'POINT')}">$450.00</span>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4 no-print">
+                    <button onclick="window.print()" class="btn palatin-btn">Print Receipt</button>
+                    <a th:href="@{/index}" class="btn btn-secondary ml-2">Back to Home</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/main/js/jquery/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/main/js/bootstrap/popper.min.js}"></script>
+<script th:src="@{/main/js/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/main/js/plugins/plugins.js}"></script>
+<script th:src="@{/main/js/active.js}"></script>
+</body>
+</html>

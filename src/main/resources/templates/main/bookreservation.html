@@ -65,6 +65,10 @@
             border-color: #cb8670;
             box-shadow: none;
         }
+        /* Fix to ensure date picker text is visible */
+        input[type="date"].form-control {
+            line-height: 52px;
+        }
         select.form-control {
             height: 52px;
         }
@@ -75,6 +79,32 @@
 </head>
 
 <body>
+
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="cssload-container">
+        <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+    </div>
+</div>
+
+<header class="header-area">
+    <div class="palatin-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <nav class="classy-navbar justify-content-between" id="palatinNav">
+                    <a th:href="@{/index}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+                    <div class="classy-menu">
+                        <div class="classynav">
+                            <ul>
+                                <li><a th:href="@{/index}">Home</a></li>
+                                <li><a th:href="@{/rooms}">Back to Rooms</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
 
 <section class="contact-form-area section-padding-100">
     <div class="container">
@@ -87,6 +117,14 @@
             </div>
         </div>
 
+        <div class="row" th:if="${error}">
+            <div class="col-12">
+                <div class="alert alert-danger text-center" role="alert">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <form th:action="@{/process-booking}" th:object="${bookingRequest}" method="post" id="reservationForm">
@@ -94,49 +132,51 @@
                     <h4 class="mb-30">Guest Information</h4>
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" th:field="*{firstName}" class="form-control" placeholder="John" required>
+                            <label>First Name</label>
+                            <input type="text" th:field="*{guestFirstName}" class="form-control" placeholder="John" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" th:field="*{lastName}" class="form-control" placeholder="Doe" required>
+                            <label>Last Name</label>
+                            <input type="text" th:field="*{guestLastName}" class="form-control" placeholder="Doe" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="john.doe@example.com" required>
+                            <label>Email</label>
+                            <input type="email" th:field="*{guestEmail}" class="form-control" placeholder="john.doe@example.com" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" th:field="*{phone}" class="form-control" placeholder="Phone Number" required>
+                            <label>Phone</label>
+                            <input type="tel" th:field="*{guestPhone}" class="form-control" placeholder="Phone Number" required>
                         </div>
                     </div>
 
                     <h4 class="mt-50 mb-30">Booking Information</h4>
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <label for="checkIn">Check-In Date</label>
-                            <input type="date" id="checkIn" th:field="*{checkInDate}" class="form-control" required>
+                            <label>Check-In Date</label>
+                            <input type="date" id="checkInDate" th:field="*{checkInDate}" class="form-control" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="checkOut">Check-Out Date</label>
-                            <input type="date" id="checkOut" th:field="*{checkOutDate}" class="form-control" required>
+                            <label>Check-Out Date</label>
+                            <input type="date" id="checkOutDate" th:field="*{checkOutDate}" class="form-control" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="numGuests">Number of Guests</label>
+                            <label>Number of Guests</label>
                             <input type="number" id="numGuests" th:field="*{numGuests}" class="form-control" value="1" min="1" required>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="roomType">Room Type</label>
-                            <select id="roomType" th:field="*{roomType}" class="form-control" required>
+                            <label>Room Type</label>
+                            <select id="roomType" th:field="*{roomTypeId}" class="form-control" required>
                                 <option value="" selected disabled>Choose room type...</option>
-                                <option value="Single">Single ($10)</option>
-                                <option value="Double Suite">Double Suite ($20)</option>
-                                <option value="Deluxe">Deluxe ($30)</option>
+                                <option th:each="type : ${roomTypes}"
+                                        th:value="${type.roomTypeId}"
+                                        th:text="${type.name + ' ($' + type.pricePerNight + ')'}"
+                                        th:data-price="${type.pricePerNight}">
+                                </option>
                             </select>
                         </div>
                         <div class="col-12">
-                            <label for="message">Special Requests/Message</label>
-                            <textarea id="message" th:field="*{message}" class="form-control" placeholder="Any special requests..."></textarea>
+                            <label>Special Requests/Message</label>
+                            <textarea th:field="*{message}" class="form-control" placeholder="Any special requests..."></textarea>
                         </div>
                     </div>
 
@@ -144,16 +184,16 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payCreditCard" value="CreditCard" required>
-                                <label class="form-check-label" for="payCreditCard">
-                                    Credit Card
-                                </label>
+                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payCreditCard" value="Credit Card" required>
+                                <label class="form-check-label" for="payCreditCard">Credit Card</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payPayPal" value="PayPal">
-                                <label class="form-check-label" for="payPayPal">
-                                    PayPal
-                                </label>
+                                <label class="form-check-label" for="payPayPal">PayPal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payCash" value="Cash">
+                                <label class="form-check-label" for="payCash">Pay Later (Cash at Hotel)</label>
                             </div>
                         </div>
                     </div>
@@ -163,9 +203,8 @@
                             <div class="price-calculator">
                                 <h3>Price Breakdown</h3>
                                 <ul>
-                                    <li id="guestCostText">Guest Cost: $0.00</li>
-                                    <li id="nightCostText">Nightly Cost: $0.00</li>
-                                    <li id="roomCostText">Room Cost: $0.00</li>
+                                    <li id="nightCostText">Duration: 0 night(s)</li>
+                                    <li id="roomCostText">Room Price: $0.00 / night</li>
                                 </ul>
                                 <h3 class="total-price">Total: <span id="totalPriceDisplay">$0.00</span></h3>
                             </div>
@@ -184,59 +223,53 @@
     </div>
 </section>
 
+<script th:src="@{/main/js/jquery/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/main/js/bootstrap/popper.min.js}"></script>
+<script th:src="@{/main/js/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/main/js/plugins/plugins.js}"></script>
+<script th:src="@{/main/js/active.js}"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const PRICE_PER_GUEST = 15;
-        const PRICE_PER_NIGHT = 10;
-        const ROOM_PRICES = {
-            'Single': 10,
-            'Double Suite': 20,
-            'Deluxe': 30,
-            '': 0
-        };
-
-        const checkInEl = document.getElementById('checkIn');
-        const checkOutEl = document.getElementById('checkOut');
-        const numGuestsEl = document.getElementById('numGuests');
+        const checkInEl = document.getElementById('checkInDate');
+        const checkOutEl = document.getElementById('checkOutDate');
         const roomTypeEl = document.getElementById('roomType');
 
-        const guestCostTextEl = document.getElementById('guestCostText');
         const nightCostTextEl = document.getElementById('nightCostText');
         const roomCostTextEl = document.getElementById('roomCostText');
         const totalPriceEl = document.getElementById('totalPriceDisplay');
 
         function calculateTotal() {
-            const guestCount = parseInt(numGuestsEl.value) || 0;
-            const guestCost = guestCount * PRICE_PER_GUEST;
-
             let nights = 0;
-            const date1 = new Date(checkInEl.value);
-            const date2 = new Date(checkOutEl.value);
+            if (checkInEl.value && checkOutEl.value) {
+                const date1 = new Date(checkInEl.value);
+                const date2 = new Date(checkOutEl.value);
 
-            if (checkInEl.value && checkOutEl.value && date2 > date1) {
-                const diffTime = Math.abs(date2 - date1);
-                nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (date2 > date1) {
+                    const diffTime = Math.abs(date2 - date1);
+                    nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                }
             }
-            const nightCost = nights * PRICE_PER_NIGHT;
 
-            const roomType = roomTypeEl.value;
-            const roomCost = ROOM_PRICES[roomType] || 0;
-            const roomName = roomType || 'N/A';
+            // Get Price from Data Attribute in Dropdown
+            const selectedOption = roomTypeEl.options[roomTypeEl.selectedIndex];
+            let pricePerNight = 0;
 
-            const totalCost = guestCost + nightCost + roomCost;
+            if (selectedOption && selectedOption.value !== "") {
+                pricePerNight = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            }
 
-            guestCostTextEl.textContent = `Guest Cost: ${guestCount} guest(s) at $15/each = $${guestCost.toFixed(2)}`;
-            nightCostTextEl.textContent = `Nightly Cost: ${nights} night(s) at $10/night = $${nightCost.toFixed(2)}`;
-            roomCostTextEl.textContent = `Room Cost: ${roomName} = $${roomCost.toFixed(2)}`;
+            const totalCost = nights * pricePerNight;
+
+            nightCostTextEl.textContent = `Duration: ${nights} night(s)`;
+            roomCostTextEl.textContent = `Room Price: $${pricePerNight.toFixed(2)} / night`;
             totalPriceEl.textContent = `$${totalCost.toFixed(2)}`;
         }
 
-        const inputsToWatch = [checkInEl, checkOutEl, numGuestsEl, roomTypeEl];
+        const inputsToWatch = [checkInEl, checkOutEl, roomTypeEl];
         inputsToWatch.forEach(input => {
             input.addEventListener('change', calculateTotal);
         });
-
-        calculateTotal();
     });
 </script>
 </body>

@@ -34,7 +34,8 @@ public class SecurityConfig {
                         // Allow public client pages
                         .requestMatchers(
                                 "/", "/index", "/about-us", "/contact",
-                                "/rooms", "/services"
+                                "/rooms", "/services", "/bookreservation", "/process-booking",
+                                "/booking-success/**"
                         ).permitAll()
 
                         // Allow public admin utility pages

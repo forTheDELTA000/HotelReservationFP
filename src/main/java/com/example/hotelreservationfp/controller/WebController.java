@@ -1,23 +1,23 @@
 package com.example.hotelreservationfp.controller;
 
 import com.example.hotelreservationfp.dto.BookingRequest;
-import com.example.hotelreservationfp.entity.Room;
-import com.example.hotelreservationfp.entity.RoomType;
-import com.example.hotelreservationfp.entity.Booking;
-import com.example.hotelreservationfp.entity.Guest;
-import com.example.hotelreservationfp.entity.Payment;
-import com.example.hotelreservationfp.repository.PaymentRepository;
-import com.example.hotelreservationfp.repository.GuestRepository;
-import com.example.hotelreservationfp.repository.BookingRepository;
-import com.example.hotelreservationfp.repository.RoomRepository;
-import com.example.hotelreservationfp.repository.RoomTypeRepository;
+import com.example.hotelreservationfp.entity.*;
+import com.example.hotelreservationfp.repository.*;
+import com.example.hotelreservationfp.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.time.format.DateTimeFormatter;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,77 +34,147 @@ public class WebController {
     private GuestRepository guestRepository;
     @Autowired
     private PaymentRepository paymentRepository;
+    @Autowired
+    private BookingService bookingService;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final DateTimeFormatter adminFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     // --- Main/Customer Pages ---
     @GetMapping("/")
-    public String redirectToAbout() {
-        return "main/index";
-    }
+    public String redirectToAbout() { return "main/index"; }
     @GetMapping("/about-us")
-    public String getAboutUsPage() {
-        return "main/about-us";
-    }
+    public String getAboutUsPage() { return "main/about-us"; }
     @GetMapping("/contact")
-    public String getContactPage() {
-        return "main/contact";
-    }
+    public String getContactPage() { return "main/contact"; }
+
     @GetMapping("/index")
-    public String getIndexPage() {
+    public String getIndexPage(Model model) {
+        model.addAttribute("roomTypes", roomTypeRepository.findAll());
         return "main/index";
     }
+
     @GetMapping("/rooms")
-    public String getRoomsPage() {
+    public String getRoomsPage(Model model) {
+        model.addAttribute("roomTypes", roomTypeRepository.findAll());
         return "main/rooms";
     }
+
     @GetMapping("/services")
-    public String getServicesPage() {
-        return "main/services";
-    }
+    public String getServicesPage() { return "main/services"; }
+// --- CUSTOMER RESERVATION LOGIC ---
+
     @GetMapping("/bookreservation")
-    public String getBookingPage() {
+    public String getBookingReservationPage(Model model) {
+        model.addAttribute("bookingRequest", new BookingRequest());
+        model.addAttribute("roomTypes", roomTypeRepository.findAll());
         return "main/bookreservation";
     }
 
-    // --- Admin Login/Dashboard ---
-    @GetMapping("/login")
-    public String getLoginPage() {
-        return "admin/login";
+    @PostMapping("/process-booking")
+    public String processBooking(@ModelAttribute("bookingRequest") BookingRequest request,
+                                 RedirectAttributes redirectAttributes) {
+
+        LocalDate checkIn = LocalDate.parse(request.getCheckInDate(), formatter);
+        LocalDate checkOut = LocalDate.parse(request.getCheckOutDate(), formatter);
+
+        // Validation
+        RoomType roomType = roomTypeRepository.findById(request.getRoomTypeId()).orElse(null);
+        if (roomType == null) {
+            redirectAttributes.addFlashAttribute("error", "Invalid Room Selected");
+            return "redirect:/bookreservation";
+        }
+
+        // Guest Logic
+        Guest guest = guestRepository.findByEmail(request.getGuestEmail());
+        if (guest == null) { guest = new Guest(); }
+        guest.setFirstName(request.getGuestFirstName());
+        guest.setLastName(request.getGuestLastName());
+        guest.setEmail(request.getGuestEmail());
+        guest.setPhone(request.getGuestPhone());
+        guestRepository.save(guest);
+
+        // Availability Logic
+        Room availableRoom = bookingService.findAvailableRoom(request.getRoomTypeId(), checkIn, checkOut);
+        if (availableRoom == null) {
+            redirectAttributes.addFlashAttribute("error", "Sorry! No " + roomType.getName() + " rooms are available.");
+            return "redirect:/bookreservation";
+        }
+
+        // Price Logic
+        long numberOfNights = ChronoUnit.DAYS.between(checkIn, checkOut);
+        if (numberOfNights < 1) numberOfNights = 1;
+        BigDecimal totalPrice = roomType.getPricePerNight().multiply(new BigDecimal(numberOfNights));
+
+        // Save Booking
+        Booking booking = new Booking();
+        booking.setGuest(guest);
+        booking.setRoom(availableRoom);
+        booking.setCheckInDate(checkIn);
+        booking.setCheckOutDate(checkOut);
+        booking.setNumGuests(request.getNumGuests());
+        booking.setTotalPrice(totalPrice);
+        booking.setStatus("Pending");
+        booking.setBookingDate(LocalDateTime.now());
+        booking.setMessage(request.getMessage());
+        bookingRepository.save(booking);
+
+        // Save Payment
+        Payment payment = new Payment();
+        payment.setBooking(booking);
+        payment.setAmount(totalPrice);
+        payment.setPaymentMethod(request.getPaymentMethod());
+        payment.setStatus("Pending");
+        paymentRepository.save(payment);
+
+        // --- FIX: Redirect to the success page with the Booking ID ---
+        return "redirect:/booking-success/" + booking.getBookingId();
     }
+
+    // --- NEW METHOD: Show the Receipt Page ---
+    @GetMapping("/booking-success/{id}")
+    public String getBookingSuccessPage(@PathVariable("id") Integer id, Model model) {
+        Optional<Booking> bookingOptional = bookingRepository.findById(id);
+
+        if (bookingOptional.isEmpty()) {
+            return "redirect:/index"; // If ID doesn't exist, go home
+        }
+
+        model.addAttribute("booking", bookingOptional.get());
+        return "main/booking-success";
+    }
+
+    // --- ADMIN PANEL ---
+
+    @GetMapping("/login")
+    public String getLoginPage() { return "admin/login"; }
+
     @GetMapping("/dashboard")
     public String getDashboardPage(Model model) {
-
-        // 1. Get Total Bookings
         long totalBookings = bookingRepository.count();
         model.addAttribute("totalBookings", totalBookings);
 
-        // 2. Get Available Rooms
-        long availableRooms = roomRepository.countByStatus("Available");
-        model.addAttribute("availableRooms", availableRooms);
+        long totalRoomsInService = roomRepository.countByStatus("Available");
+        // FIX: Used correct method name from BookingRepository
+        long occupiedToday = bookingRepository.countOccupiedRoomsForToday(LocalDate.now());
+        long availableRoomsNow = totalRoomsInService - occupiedToday;
+        model.addAttribute("availableRooms", availableRoomsNow);
 
-        // 3. Get Total Guests (Customers)
         long totalGuests = guestRepository.count();
         model.addAttribute("totalGuests", totalGuests);
 
-        // 4. Get Total Revenue (Collections)
         BigDecimal totalRevenue = paymentRepository.findTotalRevenue();
         model.addAttribute("totalRevenue", (totalRevenue != null) ? totalRevenue : BigDecimal.ZERO);
-
-        // The charts (#line-chart, #donut-chart) require more complex
-        // data processing, which we can add as the next feature.
 
         return "admin/dashboard";
     }
 
     @GetMapping("/register")
-    public String getRegisterPage() {
-        return "admin/register";
-    }
+    public String getRegisterPage() { return "admin/register"; }
     @GetMapping("/forgot-password")
-    public String getForgotPasswordPage() {
-        return "admin/forgot-password";
-    }
+    public String getForgotPasswordPage() { return "admin/forgot-password"; }
 
-    // --- Room Type Management ---
+    // --- Admin: Room Types ---
     @GetMapping("/add-room")
     public String getAddRoomPage(Model model) {
         model.addAttribute("roomType", new RoomType());
@@ -113,56 +183,49 @@ public class WebController {
     }
     @GetMapping("/all-rooms")
     public String getAllRoomsPage(Model model) {
-        List<RoomType> roomTypeList = roomTypeRepository.findAll();
-        model.addAttribute("roomTypes", roomTypeList);
+        model.addAttribute("roomTypes", roomTypeRepository.findAll());
         return "admin/all-rooms";
     }
     @GetMapping("/edit-room/{id}")
     public String getEditRoomPage(@PathVariable("id") Integer id, Model model) {
-        Optional<RoomType> roomTypeOptional = roomTypeRepository.findById(id);
-        if (roomTypeOptional.isPresent()) {
-            model.addAttribute("roomType", roomTypeOptional.get());
+        Optional<RoomType> rt = roomTypeRepository.findById(id);
+        if (rt.isPresent()) {
+            model.addAttribute("roomType", rt.get());
             model.addAttribute("pageTitle", "Edit Room Type");
-            return "admin/add-room"; // Reuses the add form
-        } else {
-            return "redirect:/all-rooms";
+            return "admin/add-room";
         }
+        return "redirect:/all-rooms";
     }
 
-    // --- Physical Room Management ---
+    // --- Admin: Physical Rooms ---
     @GetMapping("/physical-rooms")
     public String getAllPhysicalRoomsPage(Model model) {
-        List<Room> roomList = roomRepository.findAllWithRoomType();
-        model.addAttribute("rooms", roomList);
+        model.addAttribute("rooms", roomRepository.findAllWithRoomType());
         return "admin/all-physical-rooms";
     }
     @GetMapping("/add-physical-room")
     public String getAddPhysicalRoomPage(Model model) {
-        List<RoomType> roomTypes = roomTypeRepository.findAll();
         model.addAttribute("room", new Room());
-        model.addAttribute("roomTypes", roomTypes);
+        model.addAttribute("roomTypes", roomTypeRepository.findAll());
         model.addAttribute("pageTitle", "Add Physical Room");
         return "admin/add-physical-room";
     }
     @GetMapping("/edit-physical-room/{id}")
     public String getEditPhysicalRoomPage(@PathVariable("id") Integer id, Model model) {
-        Optional<Room> roomOptional = roomRepository.findById(id);
-        if (roomOptional.isPresent()) {
-            List<RoomType> roomTypes = roomTypeRepository.findAll();
-            model.addAttribute("room", roomOptional.get());
-            model.addAttribute("roomTypes", roomTypes);
+        Optional<Room> r = roomRepository.findById(id);
+        if (r.isPresent()) {
+            model.addAttribute("room", r.get());
+            model.addAttribute("roomTypes", roomTypeRepository.findAll());
             model.addAttribute("pageTitle", "Edit Physical Room");
-            return "admin/add-physical-room"; // We reuse the same form
-        } else {
-            return "redirect:/physical-rooms";
+            return "admin/add-physical-room";
         }
+        return "redirect:/physical-rooms";
     }
 
-    // --- Customer (Guest) Management ---
+    // --- Admin: Customers ---
     @GetMapping("/all-customer")
     public String getAllCustomerPage(Model model) {
-        List<Guest> guestList = guestRepository.findAll();
-        model.addAttribute("guests", guestList);
+        model.addAttribute("guests", guestRepository.findAll());
         return "admin/all-customer";
     }
     @GetMapping("/add-customer")
@@ -173,21 +236,19 @@ public class WebController {
     }
     @GetMapping("/edit-customer/{id}")
     public String getEditCustomerPage(@PathVariable("id") Integer id, Model model) {
-        Optional<Guest> guestOptional = guestRepository.findById(id);
-        if (guestOptional.isPresent()) {
-            model.addAttribute("guest", guestOptional.get());
+        Optional<Guest> g = guestRepository.findById(id);
+        if (g.isPresent()) {
+            model.addAttribute("guest", g.get());
             model.addAttribute("pageTitle", "Edit Customer");
-            return "admin/add-customer"; // We reuse the "add" form
-        } else {
-            return "redirect:/all-customer";
+            return "admin/add-customer";
         }
+        return "redirect:/all-customer";
     }
 
-    // --- Booking Management (THE CORRECT, FINAL VERSIONS) ---
+    // --- Admin: Bookings ---
     @GetMapping("/all-booking")
     public String getAllBookingPage(Model model) {
-        List<Booking> bookingList = bookingRepository.findAllWithDetails();
-        model.addAttribute("bookings", bookingList);
+        model.addAttribute("bookings", bookingRepository.findAllWithDetails());
         return "admin/all-booking";
     }
 
@@ -195,93 +256,66 @@ public class WebController {
     public String getAddBookingPage(Model model) {
         model.addAttribute("bookingRequest", new BookingRequest());
         model.addAttribute("roomTypes", roomTypeRepository.findAll());
-        model.addAttribute("pageTitle", "Add Booking"); // Added page title
+        model.addAttribute("pageTitle", "Add Booking");
+        model.addAttribute("bookingId", null); // FIX: Required for the form action check
         return "admin/add-booking";
     }
 
     @GetMapping("edit-booking/{id}")
     public String getEditBookingPage(@PathVariable("id") Integer id, Model model) {
         Optional<Booking> bookingOptional = bookingRepository.findById(id);
-        if (bookingOptional.isEmpty()) {
-            return "redirect:/all-booking";
-        }
+        if (bookingOptional.isEmpty()) return "redirect:/all-booking";
 
         Booking booking = bookingOptional.get();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         BookingRequest bookingRequest = new BookingRequest();
 
-        // --- Populate DTO with Guest and Booking info ---
+        // Populate Guest & Booking
         bookingRequest.setGuestFirstName(booking.getGuest().getFirstName());
         bookingRequest.setGuestLastName(booking.getGuest().getLastName());
         bookingRequest.setGuestEmail(booking.getGuest().getEmail());
         bookingRequest.setGuestPhone(booking.getGuest().getPhone());
         bookingRequest.setRoomTypeId(booking.getRoom().getRoomType().getRoomTypeId());
         bookingRequest.setNumGuests(booking.getNumGuests());
-        bookingRequest.setCheckInDate(booking.getCheckInDate().format(formatter));
-        bookingRequest.setCheckOutDate(booking.getCheckOutDate().format(formatter));
 
-        // --- Populate DTO with Payment info ---
+        // FIX: Populate Message
+        bookingRequest.setMessage(booking.getMessage());
+
+        // Use Admin date format (MM/dd/yyyy)
+        bookingRequest.setCheckInDate(booking.getCheckInDate().format(adminFormatter));
+        bookingRequest.setCheckOutDate(booking.getCheckOutDate().format(adminFormatter));
+
+        // Populate Payment
         Payment payment = paymentRepository.findByBooking(booking);
         if (payment != null) {
             bookingRequest.setPaymentMethod(payment.getPaymentMethod());
             bookingRequest.setPaymentStatus(payment.getStatus());
         } else {
-            bookingRequest.setPaymentStatus("Pending"); // Default
+            bookingRequest.setPaymentStatus("Pending");
         }
 
-        // --- Send data to the page ---
         model.addAttribute("bookingRequest", bookingRequest);
         model.addAttribute("bookingId", booking.getBookingId());
         model.addAttribute("roomTypes", roomTypeRepository.findAll());
         model.addAttribute("pageTitle", "Edit Booking");
 
-        return "admin/add-booking"; // Reuse the add-booking form
+        return "admin/add-booking";
     }
 
-    // --- Other Admin Pages ---
-
-    @GetMapping("/add-pricing")
-    public String getAddPricingPage() {
-        return "admin/add-pricing";
-    }
-    @GetMapping("change-password")
-    public String getChangePasswordPage() {
-        return "admin/change-password";
-    }
-    @GetMapping("edit-pricing")
-    public String getEditPricingPage() {
-        return "admin/edit-pricing";
-    }
-    @GetMapping("edit-profile")
-    public String getEditProfilePage() {
-        return "admin/edit-profile";
-    }
-    @GetMapping("employees")
-    public String getEmployeesPage() {
-        return "admin/employees";
-    }
-    @GetMapping("lock-screen")
-    public String getLockScreenPage() {
-        return "admin/lock-screen";
-    }
+    // --- Admin: Other ---
     @GetMapping("payments")
-    public String getPaymentsPage(Model model) { // Added Model
-
-        // 1. Call our new repository method
-        List<Payment> paymentList = paymentRepository.findAllWithBookingAndGuest();
-
-        // 2. Send the list of payments to the HTML page
-        model.addAttribute("payments", paymentList);
-
+    public String getPaymentsPage(Model model) {
+        model.addAttribute("payments", paymentRepository.findAllWithBookingAndGuest());
         return "admin/payments";
     }
-
-    @GetMapping("pricing")
-    public String getPricingPage() {
-        return "admin/pricing";
-    }
     @GetMapping("profile")
-    public String getProfilePage() {
-        return "admin/profile";
-    }
+    public String getProfilePage() { return "admin/profile"; }
+
+    // Placeholder pages
+    @GetMapping("/add-pricing") public String getAddPricingPage() { return "admin/add-pricing"; }
+    @GetMapping("change-password") public String getChangePasswordPage() { return "admin/change-password"; }
+    @GetMapping("edit-pricing") public String getEditPricingPage() { return "admin/edit-pricing"; }
+    @GetMapping("edit-profile") public String getEditProfilePage() { return "admin/edit-profile"; }
+    @GetMapping("employees") public String getEmployeesPage() { return "admin/employees"; }
+    @GetMapping("lock-screen") public String getLockScreenPage() { return "admin/lock-screen"; }
+    @GetMapping("pricing") public String getPricingPage() { return "admin/pricing"; }
 }

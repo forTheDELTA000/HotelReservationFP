@@ -54,4 +54,18 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             @Param("roomTypeId") Integer roomTypeId,
             @Param("checkIn") LocalDate checkIn,
             @Param("checkOut") LocalDate checkOut);
+
+
+    @Query("SELECT COUNT(b) FROM Booking b " +
+            "WHERE :today >= b.checkInDate " +
+            "AND :today < b.checkOutDate " +
+            "AND b.status = 'Confirmed'")
+    long countActiveBookings(@Param("today") LocalDate today);
+
+    @Query("SELECT COUNT(DISTINCT b.room.roomId) FROM Booking b " +
+            "WHERE :today >= b.checkInDate " +
+            "AND :today < b.checkOutDate " +
+            "AND b.status != 'Cancelled'")
+    long countOccupiedRoomsForToday(@Param("today") LocalDate today);
 }
+

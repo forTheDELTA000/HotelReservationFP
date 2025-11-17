@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Rooms</title>
+
     <link rel="icon" th:href="@{/main/img/core-img/favicon.ico}">
+
     <link rel="stylesheet" th:href="@{/main/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/main/css/classy-nav.css}">
     <link rel="stylesheet" th:href="@{/main/css/owl.carousel.min.css}">
@@ -16,7 +18,9 @@
     <link rel="stylesheet" th:href="@{/main/css/font-awesome.min.css}">
     <link rel="stylesheet" th:href="@{/main/css/nice-select.css}">
     <link rel="stylesheet" th:href="@{/main/css/travel-icon.css}">
+
     <link rel="stylesheet" th:href="@{/main/css/style.css}">
+
 </head>
 
 <body>
@@ -31,25 +35,31 @@
         <div class="classy-nav-container breakpoint-off">
             <div class="container">
                 <nav class="classy-navbar justify-content-between" id="palatinNav">
-                    <a th:href="@{/index}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+
+                    <a th:href="@{/static}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+
                     <div class="classy-navbar-toggler">
                         <span class="navbarToggler"><span></span><span></span><span></span></span>
                     </div>
+
                     <div class="classy-menu">
+
                         <div class="classycloseIcon">
                             <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                         </div>
+
                         <div class="classynav">
                             <ul>
                                 <li><a th:href="@{/index}">Home</a></li>
                                 <li><a th:href="@{/about-us}">About Us</a></li>
                                 <li><a th:href="@{/services}">Services</a></li>
                                 <li class="active"><a th:href="@{/rooms}">Rooms</a></li>
-                                <li><a th:href="@{/contact}">Contact</a></li>
                             </ul>
+
                             <div class="menu-btn">
                                 <a th:href="@{/bookreservation}" class="btn palatin-btn">Make a Reservation</a>
                             </div>
+
                         </div>
                     </div>
                 </nav>
@@ -70,81 +80,66 @@
                 <div class="section-heading text-center">
                     <div class="line-"></div>
                     <h2>Choose a room</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque, at rutrum nulla dictum. Ut ac ligula sapien.</p>
+                    <p>Find your personal sanctuary. We offer a variety of rooms and suites, each thoughtfully designed with your comfort and relaxation in mind.</p>
                 </div>
             </div>
         </div>
 
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-4" th:each="roomType : ${roomTypes}">
+            <div class="col-12 col-md-6 col-lg-4">
                 <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
-
-                    <div class="bg-thumbnail bg-img"
-                         th:style="'background-image: url(' + ${roomType.imageUrl} + ');'"></div>
-
-                    <p class="price-from"
-                       th:text="${'From $' + #numbers.formatDecimal(roomType.pricePerNight, 0, 'COMMA', 0, 'POINT') + '/night'}">
-                        From $150/night
-                    </p>
-
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/1.jpg} + ');'"></div>
+                    <p class="price-from">From $30/night</p>
                     <div class="rooms-text">
                         <div class="line"></div>
-                        <h4 th:text="${roomType.name}">Deluxe Room</h4>
-                        <p th:text="${#strings.abbreviate(roomType.description, 70)}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h4>Deluxe Room</h4>
+                        <p>Indulge in elevated luxury. Our Deluxe Room offers spacious interiors, premium amenities, and a private balcony with spectacular views.</p>
                     </div>
-
-                    <a th:href="@{/bookreservation}" class="book-room-btn btn palatin-btn">Book Room</a>
                 </div>
             </div>
 
-            <div class="col-12">
-                <div class="pagination-area wow fadeInUp" data-wow-delay="400ms">
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                        </ul>
-                    </nav>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/8.jpg} + ');'"></div>
+                    <p class="price-from">From $20/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Double Suite</h4>
+                        <p>Experience unparalleled comfort with separate living and sleeping areas. Our Double Suite is ideal for families or guests who desire extra space to spread out.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
+                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/9.jpg} + ');'"></div>
+                    <p class="price-from">From $10/night</p>
+                    <div class="rooms-text">
+                        <div class="line"></div>
+                        <h4>Single Room</h4>
+                        <p>Perfectly designed for the solo traveler, our Single Room provides a cozy, comfortable, and well-equipped space to rest and recharge.</p>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 </section>
-
 <footer class="footer-area">
     <div class="container">
         <div class="row">
 
             <div class="col-12 col-lg-5">
                 <div class="footer-widget-area mt-50">
-                    <a th:href="@{/index}" class="d-block mb-5"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris sceleri sque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus. </p>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="footer-widget-area mt-50">
-                    <h6 class="widget-title mb-5">Find us on the map</h6>
-                    <img th:src="@{/main/img/bg-img/footer-map.png}" alt="">
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="footer-widget-area mt-50">
-                    <h6 class="widget-title mb-5">Subscribe to our newsletter</h6>
-                    <form action="#" method="post" class="subscribe-form">
-                        <input type="email" name="subscribe-email" id="subscribeemail" placeholder="Your E-mail">
-                        <button type="submit">Subscribe</button>
-                    </form>
+                    <a th:href="@{/static}" class="d-block mb-5"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
+                    <p>The Palatin isn't just a place to stay; it's an experience. As a premier destination, we pride ourselves on blending warm hospitality with sophisticated style, ensuring every guest feels right at home.</p>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="copywrite-text mt-30">
-                    <p><a href="#">Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <p><a href="#">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
                     </p>
                 </div>
             </div>

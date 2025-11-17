@@ -45,8 +45,6 @@ public class WebController {
     public String redirectToAbout() { return "main/index"; }
     @GetMapping("/about-us")
     public String getAboutUsPage() { return "main/about-us"; }
-    @GetMapping("/contact")
-    public String getContactPage() { return "main/contact"; }
 
     @GetMapping("/index")
     public String getIndexPage(Model model) {

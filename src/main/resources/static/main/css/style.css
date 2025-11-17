@@ -925,39 +925,6 @@ img {
   .single-rooms-area:hover .rooms-text, .single-rooms-area:focus .rooms-text {
     background-color: #000; }
 
-.pagination-area {
-  position: relative;
-  z-index: 1;
-  text-align: center; }
-  .pagination-area .pagination {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center; }
-    .pagination-area .pagination .page-item .page-link {
-      border: 2px solid transparent;
-      background-color: transparent;
-      display: block;
-      padding: 5px;
-      margin-right: 10px;
-      color: #181818;
-      font-size: 14px; }
-      .pagination-area .pagination .page-item .page-link:hover, .pagination-area .pagination .page-item .page-link:focus {
-        color: #ffffff;
-        background-color: #616161;
-        border: 2px solid #cb8670;
-        box-shadow: none; }
-    .pagination-area .pagination .page-item:first-child .page-link {
-      margin-left: 0;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0; }
-    .pagination-area .pagination .page-item:last-child .page-link {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0; }
-    .pagination-area .pagination .page-item.active .page-link {
-      color: #ffffff;
-      background-color: #616161;
-      border: 2px solid #cb8670; }
-
 /* :: 10.0 Services Area CSS */
 .services-intro {
   position: relative;

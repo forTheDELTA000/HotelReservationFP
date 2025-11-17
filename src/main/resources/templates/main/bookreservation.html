@@ -65,7 +65,6 @@
             border-color: #cb8670;
             box-shadow: none;
         }
-        /* Fix to ensure date picker text is visible */
         input[type="date"].form-control {
             line-height: 52px;
         }
@@ -74,6 +73,15 @@
         }
         textarea.form-control {
             height: 120px;
+        }
+        .form-check-input.form-check-radio-sm {
+            width: 0.8em;
+            height: 0.8em;
+            margin-top: 0.25em;
+        }
+        .form-check-input.form-check-radio-sm::before {
+            width: 0.4em;
+            height: 0.4em;
         }
     </style>
 </head>
@@ -184,15 +192,15 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payCreditCard" value="Credit Card" required>
+                                <input class="form-check-input form-check-radio-sm" type="radio" th:field="*{paymentMethod}" id="payCreditCard" value="Credit Card" required>
                                 <label class="form-check-label" for="payCreditCard">Credit Card</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payPayPal" value="PayPal">
+                                <input class="form-check-input form-check-radio-sm" type="radio" th:field="*{paymentMethod}" id="payPayPal" value="PayPal">
                                 <label class="form-check-label" for="payPayPal">PayPal</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{paymentMethod}" id="payCash" value="Cash">
+                                <input class="form-check-input form-check-radio-sm" type="radio" th:field="*{paymentMethod}" id="payCash" value="Cash">
                                 <label class="form-check-label" for="payCash">Pay Later (Cash at Hotel)</label>
                             </div>
                         </div>
@@ -230,7 +238,8 @@
 <script th:src="@{/main/js/active.js}"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    $(document).ready(function() {
+
         const checkInEl = document.getElementById('checkInDate');
         const checkOutEl = document.getElementById('checkOutDate');
         const roomTypeEl = document.getElementById('roomType');
@@ -251,7 +260,6 @@
                 }
             }
 
-            // Get Price from Data Attribute in Dropdown
             const selectedOption = roomTypeEl.options[roomTypeEl.selectedIndex];
             let pricePerNight = 0;
 
@@ -266,10 +274,9 @@
             totalPriceEl.textContent = `$${totalCost.toFixed(2)}`;
         }
 
-        const inputsToWatch = [checkInEl, checkOutEl, roomTypeEl];
-        inputsToWatch.forEach(input => {
-            input.addEventListener('change', calculateTotal);
-        });
+        $('#checkInDate, #checkOutDate, #roomType').on('change', calculateTotal);
+
+        calculateTotal();
     });
 </script>
 </body>

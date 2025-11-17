@@ -7,6 +7,13 @@
     <title>Booking Confirmed</title>
     <link rel="icon" th:href="@{/main/img/core-img/favicon.ico}">
     <link rel="stylesheet" th:href="@{/main/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/classy-nav.css}">
+    <link rel="stylesheet" th:href="@{/main/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/main/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/main/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/main/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/main/css/travel-icon.css}">
     <link rel="stylesheet" th:href="@{/main/css/style.css}">
     <style>
         .receipt-box {
@@ -78,16 +85,6 @@
             <div class="container">
                 <nav class="classy-navbar justify-content-between" id="palatinNav">
                     <a th:href="@{/index}" class="nav-brand"><img th:src="@{/main/img/core-img/logo.png}" alt=""></a>
-                    <div class="classy-menu">
-                        <div class="classynav">
-                            <ul>
-                                <li><a th:href="@{/index}">Home</a></li>
-                            </ul>
-                            <div class="menu-btn">
-                                <a th:href="@{/bookreservation}" class="btn palatin-btn">New Booking</a>
-                            </div>
-                        </div>
-                    </div>
                 </nav>
             </div>
         </div>
@@ -100,7 +97,6 @@
 
             <div class="receipt-box">
                 <div class="receipt-header">
-                    <img th:src="@{/main/img/core-img/logo.png}" alt="" style="max-height: 50px; margin-bottom: 15px;">
                     <h2>Booking Confirmed!</h2>
                     <p>Thank you for choosing Palatin Hotel.</p>
                     <p>Booking ID: <strong th:text="${'#' + booking.bookingId}">#123</strong></p>
@@ -163,9 +159,12 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-4 no-print">
-                    <button onclick="window.print()" class="btn palatin-btn">Print Receipt</button>
-                    <a th:href="@{/index}" class="btn btn-secondary ml-2">Back to Home</a>
+                <div class="text-center mt-4 mb-5 no-print">
+                    <div class="menu-btn" style="display: inline-block; margin-right: 10px;">
+                        <a th:href="@{/bookreservation}" class="btn palatin-btn">New Booking</a>
+                    </div>
+                    <button onclick="window.print()" class="btn palatin-btn" style="margin-right: 10px;">Print Receipt</button>
+                    <a th:href="@{/index}" class="btn btn-secondary">Back to Home</a>
                 </div>
             </div>
 

@@ -87,40 +87,30 @@
 
         <div class="row">
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="100ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/1.jpg} + ');'"></div>
-                    <p class="price-from">From $30/night</p>
+            <div class="col-12 col-md-6 col-lg-4" th:each="room, iterStat : ${roomTypes}">
+
+                <div class="single-rooms-area wow fadeInUp"
+                     th:data-wow-delay="${(iterStat.index + 1) * 100} + 'ms'">
+
+                    <div class="bg-thumbnail bg-img"
+                         th:style="'background-image: url(' + ${room.imageUrl} + ');'">
+                    </div>
+
+                    <p class="price-from">From $<span th:text="${room.pricePerNight}"></span>/night</p>
+
                     <div class="rooms-text">
                         <div class="line"></div>
-                        <h4>Deluxe Room</h4>
-                        <p>Indulge in elevated luxury. Our Deluxe Room offers spacious interiors, premium amenities, and a private balcony with spectacular views.</p>
+
+                        <h4 th:text="${room.name}">Room Name</h4>
+
+                        <p th:text="${room.description}">Room Description</p>
                     </div>
+
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="200ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/8.jpg} + ');'"></div>
-                    <p class="price-from">From $20/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Double Suite</h4>
-                        <p>Experience unparalleled comfort with separate living and sleeping areas. Our Double Suite is ideal for families or guests who desire extra space to spread out.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-rooms-area wow fadeInUp" data-wow-delay="300ms">
-                    <div class="bg-thumbnail bg-img" th:style="'background-image: url(' + @{/main/img/bg-img/9.jpg} + ');'"></div>
-                    <p class="price-from">From $10/night</p>
-                    <div class="rooms-text">
-                        <div class="line"></div>
-                        <h4>Single Room</h4>
-                        <p>Perfectly designed for the solo traveler, our Single Room provides a cozy, comfortable, and well-equipped space to rest and recharge.</p>
-                    </div>
-                </div>
+            <div class="col-12 text-center" th:if="${#lists.isEmpty(roomTypes)}">
+                <p>No rooms have been added yet. Please check back later!</p>
             </div>
 
         </div>

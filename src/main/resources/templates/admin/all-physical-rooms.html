@@ -32,6 +32,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row" th:if="${error}">
+                <div class="col-sm-12">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span th:text="${error}"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card card-table">
@@ -50,7 +61,13 @@
                                     <tr th:each="room : ${rooms}">
                                         <td th:text="${room.roomNumber}">101</td>
                                         <td th:text="${room.roomType.name}">Deluxe Room</td>
-                                        <td th:text="${room.status}">Available</td>
+                                        <td>
+                                            <div class="actions">
+                                                <span th:if="${room.status == 'Available'}" class="badge badge-pill bg-success inv-badge">Available</span>
+                                                <span th:if="${room.status == 'Occupied'}" class="badge badge-pill bg-danger inv-badge">Occupied</span>
+                                                <span th:if="${room.status != 'Available' and room.status != 'Occupied'}" class="badge badge-pill bg-warning inv-badge" th:text="${room.status}"></span>
+                                            </div>
+                                        </td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action"> <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">

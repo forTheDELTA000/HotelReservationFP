@@ -67,5 +67,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             "AND :today < b.checkOutDate " +
             "AND b.status != 'Cancelled'")
     long countOccupiedRoomsForToday(@Param("today") LocalDate today);
+
 }
 

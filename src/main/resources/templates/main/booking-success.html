@@ -144,13 +144,17 @@
                     </div>
 
                     <h5>Payment Info</h5>
-                    <div class="receipt-row">
+                    <div class="receipt-row" th:if="${payment != null}">
                         <span>Method:</span>
-                        <span th:text="${booking.payment.paymentMethod}">Credit Card</span>
+                        <span th:text="${payment.paymentMethod}">Credit Card</span>
                     </div>
-                    <div class="receipt-row">
+                    <div class="receipt-row" th:if="${payment != null}">
                         <span>Payment Status:</span>
-                        <strong th:text="${booking.payment.status}">Paid</strong>
+                        <strong th:text="${payment.status}">Paid</strong>
+                    </div>
+                    <div class="receipt-row" th:if="${payment == null}">
+                        <span>Payment Info:</span>
+                        <strong>Pending Processing</strong>
                     </div>
 
                     <div class="total-row">

@@ -2,24 +2,23 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
 <ScrollPane xmlns="http://javafx.com/javafx/25.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.hotelreservationfp.ui.controller.AddPhysicalRoomController"
-            fitToWidth="true" style="-fx-background-color: #f4f7fa;">
+            fitToWidth="true" styleClass="root">
 
     <VBox spacing="20" style="-fx-padding: 20;" alignment="TOP_CENTER">
 
         <VBox spacing="5" maxWidth="1000">
-            <Label fx:id="pageTitle" text="Add Physical Room" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-            <HBox spacing="5" style="-fx-text-fill: #999;">
-                <Label text="Dashboard &gt; Physical Rooms &gt;" />
-                <Label fx:id="breadcrumbActive" text="Add Room" style="-fx-font-weight: bold;"/>
+            <Label fx:id="pageTitle" text="Add Physical Room" styleClass="page-title" />
+            <HBox spacing="5">
+                <Label text="Dashboard &gt; Physical Rooms &gt;" styleClass="breadcrumb-text" />
+                <Label fx:id="breadcrumbActive" text="Add Room" styleClass="breadcrumb-active"/>
             </HBox>
         </VBox>
 
-        <GridPane hgap="20" vgap="15" style="-fx-padding: 15; -fx-background-color: white; -fx-border-radius: 5;"
+        <GridPane hgap="20" vgap="15" styleClass="form-container"
                   GridPane.hgrow="ALWAYS" maxWidth="1000">
 
             <columnConstraints>
@@ -42,8 +41,8 @@
         </GridPane>
 
         <HBox spacing="10" alignment="BOTTOM_RIGHT" maxWidth="1000">
-            <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #6c757d; -fx-text-fill: white;" />
-            <Button text="Save" onAction="#handleSaveRoom" style="-fx-background-color: #007bff; -fx-text-fill: white;" />
+            <Button text="Cancel" onAction="#handleCancel" styleClass="btn, btn-secondary" />
+            <Button text="Save" onAction="#handleSaveRoom" styleClass="btn, btn-primary" />
         </HBox>
 
     </VBox>

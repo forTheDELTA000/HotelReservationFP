@@ -2,32 +2,32 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox spacing="10" style="-fx-padding: 20; -fx-background-color: white;"
+<VBox spacing="10" styleClass="root"
       xmlns="http://javafx.com/javafx/25.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.hotelreservationfp.ui.controller.AllBookingsController">
 
-    <Label text="All Bookings" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="All Bookings" styleClass="page-title" />
 
     <HBox spacing="10" alignment="CENTER_LEFT">
         <TextField fx:id="searchField" promptText="Search bookings..." HBox.hgrow="ALWAYS" />
-        <Button text="Search" style="-fx-background-color: #f0ad4e; -fx-text-fill: white;" onAction="#handleSearch"/>
-        <Button text="+ Add New Booking" style="-fx-background-color: #5cb85c; -fx-text-fill: white;" onAction="#showAddBookingForm"/>
-        <Button text="Refresh" style="-fx-background-color: #007bff; -fx-text-fill: white;" onAction="#loadBookings"/>
+        <Button text="+ Add New Booking" styleClass="btn, btn-success" onAction="#showAddBookingForm"/>
+        <Button text="Refresh" styleClass="btn, btn-primary" onAction="#loadBookings"/>
     </HBox>
 
-    <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
-            <TableColumn fx:id="guestNameColumn" text="Guest Name" prefWidth="150" />
-            <TableColumn fx:id="roomTypeColumn" text="Room Type" prefWidth="120" />
-            <TableColumn fx:id="checkInColumn" text="Check-in Date" prefWidth="120" />
-            <TableColumn fx:id="checkOutColumn" text="Check-out Date" prefWidth="120" />
-            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80" />
-            <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150" />
-        </columns>
-    </TableView>
+    <VBox styleClass="table-container" VBox.vgrow="ALWAYS">
+        <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                <TableColumn fx:id="guestNameColumn" text="Guest Name" prefWidth="150" />
+                <TableColumn fx:id="roomTypeColumn" text="Room Type" prefWidth="120" />
+                <TableColumn fx:id="checkInColumn" text="Check-in Date" prefWidth="120" />
+                <TableColumn fx:id="checkOutColumn" text="Check-out Date" prefWidth="120" />
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="80" />
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150" />
+            </columns>
+        </TableView>
+    </VBox>
 
 </VBox>

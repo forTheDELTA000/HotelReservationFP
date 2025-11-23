@@ -2,6 +2,8 @@ package com.example.hotelreservationfp.ui.controller;
 
 import com.example.hotelreservationfp.entity.*;
 import com.example.hotelreservationfp.repository.*;
+import jakarta.persistence.EntityManager;      // <--- NEW IMPORT
+import jakarta.persistence.PersistenceContext; // <--- NEW IMPORT
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -23,7 +25,10 @@ public class AllBookingsController {
     @Autowired private RoomRepository roomRepository;
     @Autowired private ApplicationContext context;
 
-    @FXML private TextField searchField;
+    // --- NEW: Inject EntityManager to handle manual session clearing ---
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @FXML private TableView<Booking> bookingsTable;
     @FXML private TableColumn<Booking, Integer> idColumn;
     @FXML private TableColumn<Booking, String> guestNameColumn;
@@ -51,17 +56,20 @@ public class AllBookingsController {
         roomTypeColumn.setCellValueFactory(c -> new SimpleStringProperty(
                 c.getValue().getRoom().getRoomType().getName()));
 
-        // Add Edit/Delete Buttons
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private final Button editBtn = new Button("Edit");
             private final Button deleteBtn = new Button("Delete");
             private final javafx.scene.layout.HBox pane = new javafx.scene.layout.HBox(5, editBtn, deleteBtn);
 
             {
-                editBtn.setOnAction(e -> handleEdit(getTableView().getItems().get(getIndex())));
-                deleteBtn.setOnAction(e -> handleDelete(getTableView().getItems().get(getIndex())));
+                // Updated Style to match your new CSS classes if you prefer, or keep inline
+                editBtn.getStyleClass().add("btn-primary"); // Or keep inline style
+                deleteBtn.getStyleClass().add("btn-secondary"); // Or keep inline style
                 editBtn.setStyle("-fx-background-color: #17a2b8; -fx-text-fill: white;");
                 deleteBtn.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white;");
+
+                editBtn.setOnAction(e -> handleEdit(getTableView().getItems().get(getIndex())));
+                deleteBtn.setOnAction(e -> handleDelete(getTableView().getItems().get(getIndex())));
             }
 
             @Override protected void updateItem(Void item, boolean empty) {
@@ -75,21 +83,58 @@ public class AllBookingsController {
         bookingsTable.setItems(FXCollections.observableArrayList(bookingRepository.findAllWithDetails()));
     }
 
-    @FXML public void handleSearch() { /* Implement search filter logic */ }
-
     @FXML public void showAddBookingForm() { navigate(null); }
 
     private void handleEdit(Booking b) { navigate(b.getBookingId()); }
 
+    // --- REWRITTEN DELETE METHOD ---
     private void handleDelete(Booking b) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete Booking?", ButtonType.YES, ButtonType.NO);
         if (alert.showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
-            Payment p = paymentRepository.findByBooking(b);
-            if (p != null) { b.setPayment(null); paymentRepository.delete(p); }
-            Room r = b.getRoom();
-            if (r != null) { r.setStatus("Available"); roomRepository.save(r); }
-            bookingRepository.delete(b);
-            loadBookings();
+
+            try {
+                // 1. Get the IDs needed for deletion
+                Integer bookingId = b.getBookingId();
+                Integer paymentId = null;
+
+                // 2. Fetch a fresh copy from DB to check current status
+                Booking freshBooking = bookingRepository.findById(bookingId).orElse(null);
+
+                if (freshBooking != null) {
+                    // Fix Room Status first (This is safe)
+                    if (freshBooking.getRoom() != null) {
+                        freshBooking.getRoom().setStatus("Available");
+                        roomRepository.save(freshBooking.getRoom());
+                    }
+
+                    // Check if a payment exists and get its ID
+                    Payment p = paymentRepository.findByBooking(freshBooking);
+                    if (p != null) {
+                        paymentId = p.getPaymentId();
+                    }
+                }
+
+                // 3. THE FIX: Clear the Hibernate Session
+                // This forces Hibernate to "forget" the loaded objects.
+                // It stops Hibernate from checking if the Booking in memory references the Payment.
+                entityManager.clear();
+
+                // 4. Delete Payment by ID directly (if it existed)
+                if (paymentId != null) {
+                    paymentRepository.deleteById(paymentId);
+                }
+
+                // 5. Delete Booking by ID directly
+                bookingRepository.deleteById(bookingId);
+
+                // 6. Refresh UI
+                loadBookings();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Could not delete booking: " + e.getMessage());
+                errorAlert.show();
+            }
         }
     }
 
@@ -100,9 +145,10 @@ public class AllBookingsController {
             Parent view = loader.load();
             if (id != null) ((AddBookingController) loader.getController()).setBookingId(id);
 
-            // Find the StackPane in MainLayout (assumes MainLayout id is contentArea)
             StackPane contentArea = (StackPane) bookingsTable.getScene().lookup("#contentArea");
-            contentArea.getChildren().setAll(view);
+            if (contentArea != null) {
+                contentArea.getChildren().setAll(view);
+            }
         } catch (IOException e) { e.printStackTrace(); }
     }
 }

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox spacing="10" style="-fx-padding: 20; -fx-background-color: #f4f7fa;"
+<VBox spacing="10" styleClass="root"
       xmlns="http://javafx.com/javafx/25.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.hotelreservationfp.ui.controller.AllCustomersController">
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <Label text="All Customers" style="-fx-font-size: 24px; -fx-font-weight: bold;" HBox.hgrow="ALWAYS"/>
-        <Button text="Add Customer" style="-fx-background-color: #007bff; -fx-text-fill: white;" onAction="#showAddCustomerForm"/>
+        <Label text="All Customers" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+        <Button text="Add Customer" styleClass="btn, btn-primary" onAction="#showAddCustomerForm"/>
     </HBox>
 
-    <VBox style="-fx-background-color: white; -fx-padding: 15; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+    <VBox styleClass="table-container" VBox.vgrow="ALWAYS">
         <TableView fx:id="customersTable" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="idColumn" text="Guest ID" prefWidth="100" />

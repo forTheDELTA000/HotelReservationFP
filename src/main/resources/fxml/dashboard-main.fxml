@@ -2,86 +2,84 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
 
 <ScrollPane xmlns="http://javafx.com/javafx/25.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.hotelreservationfp.ui.controller.DashboardMainController"
-            fitToWidth="true" style="-fx-background-color: #f4f7fa;">
+            fitToWidth="true" styleClass="root">
+
+    <stylesheets>
+        <URL value="@../../css/style.css" />
+    </stylesheets>
 
     <VBox spacing="20" style="-fx-padding: 20;">
 
         <VBox spacing="5">
-            <Label text="Good Morning!"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 0 0 10 0;" />
+            <Label text="Good Morning!" styleClass="page-title" />
             <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label text="Dashboard" style="-fx-text-fill: #007bff;" />
-                <Label text="&gt;" style="-fx-text-fill: #999;" />
-                <Label text="Active" style="-fx-text-fill: #999;" />
+                <Label text="Dashboard" styleClass="breadcrumb-active" />
+                <Label text="&gt;" styleClass="breadcrumb-text" />
+                <Label text="Active" styleClass="breadcrumb-text" />
             </HBox>
         </VBox>
 
         <HBox spacing="20">
 
-            <VBox HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: white; -fx-border-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+            <VBox HBox.hgrow="ALWAYS" styleClass="card">
                 <HBox alignment="CENTER_LEFT">
                     <VBox HBox.hgrow="ALWAYS">
-                        <Label fx:id="totalBookingsLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold;" />
-                        <Label text="Total Bookings" style="-fx-text-fill: #6c757d;" />
+                        <Label fx:id="totalBookingsLabel" text="0" styleClass="card-value" />
+                        <Label text="Total Bookings" styleClass="card-subtitle" />
                     </VBox>
-                    <Label text="👤" style="-fx-font-size: 30px; -fx-text-fill: #009688;" />
+                    <Label text="👤" styleClass="card-icon" />
                 </HBox>
             </VBox>
 
-            <VBox HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: white; -fx-border-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+            <VBox HBox.hgrow="ALWAYS" styleClass="card">
                 <HBox alignment="CENTER_LEFT">
                     <VBox HBox.hgrow="ALWAYS">
-                        <Label fx:id="availableRoomsLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold;" />
-                        <Label text="Available Rooms" style="-fx-text-fill: #6c757d;" />
+                        <Label fx:id="availableRoomsLabel" text="0" styleClass="card-value" />
+                        <Label text="Available Rooms" styleClass="card-subtitle" />
                     </VBox>
-                    <Label text="🏠" style="-fx-font-size: 30px; -fx-text-fill: #009688;" />
+                    <Label text="🏠" styleClass="card-icon" />
                 </HBox>
             </VBox>
 
-            <VBox HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: white; -fx-border-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+            <VBox HBox.hgrow="ALWAYS" styleClass="card">
                 <HBox alignment="CENTER_LEFT">
                     <VBox HBox.hgrow="ALWAYS">
-                        <Label fx:id="totalGuestsLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold;" />
-                        <Label text="Total Customers" style="-fx-text-fill: #6c757d;" />
+                        <Label fx:id="totalGuestsLabel" text="0" styleClass="card-value" />
+                        <Label text="Total Customers" styleClass="card-subtitle" />
                     </VBox>
-                    <Label text="📄" style="-fx-font-size: 30px; -fx-text-fill: #009688;" />
+                    <Label text="📄" styleClass="card-icon" />
                 </HBox>
             </VBox>
 
-            <VBox HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: white; -fx-border-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+            <VBox HBox.hgrow="ALWAYS" styleClass="card">
                 <HBox alignment="CENTER_LEFT">
                     <VBox HBox.hgrow="ALWAYS">
-                        <Label fx:id="totalRevenueLabel" text="\$0.00" style="-fx-font-size: 28px; -fx-font-weight: bold;" />
-                        <Label text="Total Revenue" style="-fx-text-fill: #6c757d;" />
+                        <Label fx:id="totalRevenueLabel" text="\$0.00" styleClass="card-value" />
+                        <Label text="Total Revenue" styleClass="card-subtitle" />
                     </VBox>
-                    <Label text="\$" style="-fx-font-size: 30px; -fx-text-fill: #009688;" />
+                    <Label text="\$" styleClass="card-icon" />
                 </HBox>
             </VBox>
         </HBox>
 
         <HBox spacing="20" VBox.vgrow="ALWAYS">
-            <VBox HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-border-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                <Label text="VISITORS (Static)" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                <VBox fx:id="lineChartContainer" prefHeight="300" style="-fx-border-color: #eee; -fx-border-width: 1;" VBox.vgrow="ALWAYS">
-                    <Label text="[Line Chart Placeholder]" alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"/>
+
+            <VBox HBox.hgrow="ALWAYS" styleClass="card">
+                <Label text="VISITORS (Static)" styleClass="section-title"/>
+                <VBox fx:id="lineChartContainer" prefHeight="300" styleClass="chart-placeholder-box" VBox.vgrow="ALWAYS">
+                    <Label text="[Line Chart Placeholder]" styleClass="placeholder-text" alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"/>
                 </VBox>
             </VBox>
 
-            <VBox HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-border-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                <Label text="ROOMS BOOKED (Static)" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                <VBox fx:id="donutChartContainer" prefHeight="300" style="-fx-border-color: #eee; -fx-border-width: 1;" VBox.vgrow="ALWAYS">
-                    <Label text="[Donut Chart Placeholder]" alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"/>
+            <VBox HBox.hgrow="ALWAYS" styleClass="card">
+                <Label text="ROOMS BOOKED (Static)" styleClass="section-title"/>
+                <VBox fx:id="donutChartContainer" prefHeight="300" styleClass="chart-placeholder-box" VBox.vgrow="ALWAYS">
+                    <Label text="[Donut Chart Placeholder]" styleClass="placeholder-text" alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"/>
                 </VBox>
             </VBox>
         </HBox>

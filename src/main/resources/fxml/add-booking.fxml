@@ -2,22 +2,21 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
 <ScrollPane xmlns="http://javafx.com/javafx/25.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.hotelreservationfp.ui.controller.AddBookingController"
-            fitToWidth="true" style="-fx-background-color: #f4f7fa;">
+            fitToWidth="true" styleClass="root">
 
     <VBox spacing="20" style="-fx-padding: 20;" alignment="TOP_CENTER">
 
         <Label fx:id="errorMessageLabel" text="Error: Could not save booking."
-               style="-fx-text-fill: red; -fx-font-weight: bold; -fx-border-color: red; -fx-border-width: 1; -fx-padding: 5;"
+               styleClass="alert-error"
                visible="false" managed="false" maxWidth="Infinity"/>
 
-        <Label fx:id="formTitle" text="Add New Booking" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+        <Label fx:id="formTitle" text="Add New Booking" styleClass="page-title" />
 
-        <GridPane hgap="20" vgap="15" style="-fx-padding: 15; -fx-background-color: white; -fx-border-radius: 5;"
+        <GridPane hgap="20" vgap="15" styleClass="form-container"
                   GridPane.hgrow="ALWAYS" maxWidth="1000">
 
             <columnConstraints>
@@ -63,8 +62,8 @@
         </GridPane>
 
         <HBox spacing="10" alignment="BOTTOM_RIGHT" maxWidth="1000">
-            <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #6c757d; -fx-text-fill: white;" />
-            <Button fx:id="saveButton" text="Save" onAction="#handleSaveBooking" style="-fx-background-color: #007bff; -fx-text-fill: white;" />
+            <Button text="Cancel" onAction="#handleCancel" styleClass="btn, btn-secondary" />
+            <Button fx:id="saveButton" text="Save" onAction="#handleSaveBooking" styleClass="btn, btn-primary" />
         </HBox>
 
     </VBox>

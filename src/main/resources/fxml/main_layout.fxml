@@ -8,46 +8,46 @@
             prefWidth="1200" prefHeight="800">
 
     <top>
-        <HBox style="-fx-background-color: #cb8670; -fx-padding: 15; -fx-alignment: CENTER_LEFT;">
-            <Label text="Palatin Hotel Admin" textFill="white" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <HBox styleClass="top-bar">
+            <Label text="Hotel Reservation Admin Panel" styleClass="app-logo-text"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Logout" onAction="#handleLogout" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white;"/>
+            <Button text="Logout" onAction="#handleLogout" styleClass="btn-logout"/>
         </HBox>
     </top>
 
     <left>
-        <VBox spacing="5" style="-fx-background-color: white; -fx-padding: 10; -fx-border-color: #ddd; -fx-border-width: 0 1 0 0;" prefWidth="240">
+        <VBox spacing="5" styleClass="sidebar" prefWidth="240">
             <padding><Insets top="20"/></padding>
 
-            <Button text="Dashboard" onAction="#showDashboard" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Button text="Dashboard" onAction="#showDashboard" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
-            <Label text="Bookings" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
-            <Button text="All Bookings" onAction="#showAllBookings" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
-            <Button text="Add Booking" onAction="#showAddBooking" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Label text="Bookings" styleClass="sidebar-section-label"/>
+            <Button text="All Bookings" onAction="#showAllBookings" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Add Booking" onAction="#showAddBooking" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
-            <Label text="Customers" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
-            <Button text="All Customers" onAction="#showCustomers" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
-            <Button text="Add Customer" onAction="#showAddCustomer" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Label text="Customers" styleClass="sidebar-section-label"/>
+            <Button text="All Customers" onAction="#showCustomers" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Add Customer" onAction="#showAddCustomer" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
-            <Label text="Available Rooms" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
-            <Button text=" All Physical Rooms" onAction="#showPhysicalRooms" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
-            <Button text="Add Physical Room" onAction="#showAddPhysicalRoom" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Label text="Available Rooms" styleClass="sidebar-section-label"/>
+            <Button text=" All Physical Rooms" onAction="#showPhysicalRooms" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Add Physical Room" onAction="#showAddPhysicalRoom" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
-            <Label text="Rooms Types" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
-            <Button text="All Room Types" onAction="#showRoomTypes" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
-            <Button text="Add Room Type" onAction="#showAddRoomType" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Label text="Rooms Types" styleClass="sidebar-section-label"/>
+            <Button text="All Room Types" onAction="#showRoomTypes" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="Add Room Type" onAction="#showAddRoomType" maxWidth="Infinity" styleClass="sidebar-btn"/>
 
             <Separator/>
-            <Label text="Accounts" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
-            <Button text="Payments" onAction="#showPayments" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Label text="Accounts" styleClass="sidebar-section-label"/>
+            <Button text="Payments" onAction="#showPayments" maxWidth="Infinity" styleClass="sidebar-btn"/>
         </VBox>
     </left>
 
     <center>
-        <StackPane fx:id="contentArea" style="-fx-padding: 20; -fx-background-color: #f4f7fa;"/>
+        <StackPane fx:id="contentArea" styleClass="root" style="-fx-padding: 20;"/>
     </center>
 </BorderPane>

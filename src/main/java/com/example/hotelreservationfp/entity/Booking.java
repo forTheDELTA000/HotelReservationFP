@@ -29,7 +29,7 @@ public class Booking {
     private Room room;
 
     // One-to-one relationship with payment details (if payment is made)
-    @OneToOne(mappedBy = "booking")
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private Payment payment;
 
     // Date when the guest will check in

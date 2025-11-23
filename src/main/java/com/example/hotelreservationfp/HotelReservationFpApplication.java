@@ -1,13 +1,12 @@
 package com.example.hotelreservationfp;
 
-import org.springframework.boot.SpringApplication;
+import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class HotelReservationFpApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HotelReservationFpApplication.class, args);
+        Application.launch(JavaFxApplication.class, args);
     }
-
 }

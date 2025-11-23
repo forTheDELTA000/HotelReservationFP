@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/25.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotelreservationfp.ui.controller.AddBookingController"
+            fitToWidth="true" style="-fx-background-color: #f4f7fa;">
+
+    <VBox spacing="20" style="-fx-padding: 20;" alignment="TOP_CENTER">
+
+        <Label fx:id="errorMessageLabel" text="Error: Could not save booking."
+               style="-fx-text-fill: red; -fx-font-weight: bold; -fx-border-color: red; -fx-border-width: 1; -fx-padding: 5;"
+               visible="false" managed="false" maxWidth="Infinity"/>
+
+        <Label fx:id="formTitle" text="Add New Booking" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <GridPane hgap="20" vgap="15" style="-fx-padding: 15; -fx-background-color: white; -fx-border-radius: 5;"
+                  GridPane.hgrow="ALWAYS" maxWidth="1000">
+
+            <columnConstraints>
+                <ColumnConstraints percentWidth="33.3" />
+                <ColumnConstraints percentWidth="33.3" />
+                <ColumnConstraints percentWidth="33.4" />
+            </columnConstraints>
+
+            <Label text="Guest First Name" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="guestFirstNameField" promptText="First Name" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+
+            <Label text="Guest Last Name" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <TextField fx:id="guestLastNameField" promptText="Last Name" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Email ID" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+            <TextField fx:id="guestEmailField" promptText="Email" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+
+            <Label text="Phone Number" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="guestPhoneField" promptText="Phone Number" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+
+            <Label text="Room Type" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            <ComboBox fx:id="roomTypeCombo" promptText="Select Room Type" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+            <Label text="Total Members" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+            <ComboBox fx:id="numGuestsCombo" promptText="Select" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"/>
+
+            <Label text="Arrival Date" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <DatePicker fx:id="checkInDateField" promptText="Arrival Date" GridPane.rowIndex="5" GridPane.columnIndex="0" maxWidth="Infinity"/>
+
+            <Label text="Departure Date" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+            <DatePicker fx:id="checkOutDateField" promptText="Departure Date" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+            <Label text="Payment Method" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <ComboBox fx:id="paymentMethodCombo" GridPane.rowIndex="7" GridPane.columnIndex="0" maxWidth="Infinity"/>
+
+            <Label text="Payment Status" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+            <ComboBox fx:id="paymentStatusCombo" GridPane.rowIndex="7" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+            <Label text="Message" GridPane.rowIndex="6" GridPane.columnIndex="2" />
+
+            <TextArea fx:id="messageArea" prefRowCount="3" wrapText="true" GridPane.rowIndex="7" GridPane.columnIndex="2" GridPane.rowSpan="2" />
+
+        </GridPane>
+
+        <HBox spacing="10" alignment="BOTTOM_RIGHT" maxWidth="1000">
+            <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #6c757d; -fx-text-fill: white;" />
+            <Button fx:id="saveButton" text="Save" onAction="#handleSaveBooking" style="-fx-background-color: #007bff; -fx-text-fill: white;" />
+        </HBox>
+
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotelreservationfp.ui.controller.FxMainLayoutController"
+            prefWidth="1200" prefHeight="800">
+
+    <top>
+        <HBox style="-fx-background-color: #cb8670; -fx-padding: 15; -fx-alignment: CENTER_LEFT;">
+            <Label text="Palatin Hotel Admin" textFill="white" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Logout" onAction="#handleLogout" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="5" style="-fx-background-color: white; -fx-padding: 10; -fx-border-color: #ddd; -fx-border-width: 0 1 0 0;" prefWidth="240">
+            <padding><Insets top="20"/></padding>
+
+            <Button text="Dashboard" onAction="#showDashboard" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+
+            <Separator/>
+            <Label text="Bookings" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
+            <Button text="All Bookings" onAction="#showAllBookings" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Button text="Add Booking" onAction="#showAddBooking" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+
+            <Separator/>
+            <Label text="Customers" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
+            <Button text="All Customers" onAction="#showCustomers" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Button text="Add Customer" onAction="#showAddCustomer" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+
+            <Separator/>
+            <Label text="Available Rooms" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
+            <Button text=" All Physical Rooms" onAction="#showPhysicalRooms" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Button text="Add Physical Room" onAction="#showAddPhysicalRoom" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+
+            <Separator/>
+            <Label text="Rooms Types" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
+            <Button text="All Room Types" onAction="#showRoomTypes" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+            <Button text="Add Room Type" onAction="#showAddRoomType" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+
+            <Separator/>
+            <Label text="Accounts" style="-fx-padding: 10 20; -fx-text-fill: #888; -fx-font-size: 12px;"/>
+            <Button text="Payments" onAction="#showPayments" maxWidth="Infinity" style="-fx-alignment: CENTER_LEFT; -fx-background-color: transparent; -fx-padding: 10;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 20; -fx-background-color: #f4f7fa;"/>
+    </center>
+</BorderPane>

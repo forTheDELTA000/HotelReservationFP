@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotelreservationfp.ui.controller.LoginController"
+            style="-fx-background-color: #f7f7f7;"> <center>
+    <HBox alignment="CENTER">
+        <VBox style="-fx-border-color: #ddd; -fx-border-radius: 5px; -fx-background-color: white; -fx-padding: 20px;"
+              spacing="15" maxWidth="600" minWidth="400">
+
+            <VBox alignment="CENTER" spacing="10" style="-fx-padding: 0 0 10 0;">
+                <ImageView fitHeight="60" fitWidth="180" preserveRatio="true">
+                    <image>
+                        <Image url="@../static/admin/assets/img/logo.png" />
+                    </image>
+                </ImageView>
+                <Label text="Hotel Reservation Admin" style="-fx-font-size: 14px; -fx-text-fill: #555;" />
+            </VBox>
+
+            <Separator />
+
+            <Label text="Login" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10 0 0 0;" />
+            <Label text="Access to our dashboard" style="-fx-font-size: 12px; -fx-text-fill: #999;" />
+
+            <Label fx:id="errorMessage" text="Invalid email or password."
+                   style="-fx-text-fill: red; -fx-font-weight: bold;" visible="false"/>
+            <Label fx:id="logoutMessage" text="You have been logged out."
+                   style="-fx-text-fill: green; -fx-font-weight: bold;" visible="false"/>
+
+            <VBox spacing="8">
+                <TextField fx:id="usernameField" promptText="Email" />
+                <PasswordField fx:id="passwordField" promptText="Password" />
+            </VBox>
+
+            <Button text="Login" onAction="#handleLoginButtonAction"
+                    maxWidth="Infinity" style="-fx-background-color: #007bff; -fx-text-fill: white;" />
+
+            <HBox alignment="CENTER">
+                <Hyperlink text="Forgot Password?" onAction="#handleForgotPassword" />
+            </HBox>
+
+            <HBox alignment="CENTER" spacing="5">
+                <Label text="Don't have an account?" />
+                <Hyperlink text="Register" onAction="#handleRegister" />
+            </HBox>
+
+        </VBox>
+    </HBox>
+</center>
+
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50" />
+    </padding>
+
+</BorderPane>

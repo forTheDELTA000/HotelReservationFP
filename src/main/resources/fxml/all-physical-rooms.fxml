@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" style="-fx-padding: 20; -fx-background-color: #f4f7fa;"
+      xmlns="http://javafx.com/javafx/25.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelreservationfp.ui.controller.AllPhysicalRoomsController">
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Physical Rooms" style="-fx-font-size: 24px; -fx-font-weight: bold;" HBox.hgrow="ALWAYS"/>
+        <Button text="Add Physical Room" style="-fx-background-color: #007bff; -fx-text-fill: white;" onAction="#showAddPhysicalRoomForm"/>
+    </HBox>
+
+    <Label fx:id="errorMessageLabel" text="Error message placeholder."
+           style="-fx-text-fill: red; -fx-font-weight: bold; -fx-border-color: red; -fx-border-width: 1; -fx-padding: 5;"
+           visible="false" maxWidth="Infinity"/>
+
+    <VBox style="-fx-background-color: white; -fx-padding: 15; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="roomsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="roomNumberColumn" text="Room Number" prefWidth="120" />
+                <TableColumn fx:id="roomTypeColumn" text="Room Type" prefWidth="250" />
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

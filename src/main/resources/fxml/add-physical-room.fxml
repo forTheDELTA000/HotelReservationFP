@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/25.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.hotelreservationfp.ui.controller.AddPhysicalRoomController"
+            fitToWidth="true" style="-fx-background-color: #f4f7fa;">
+
+    <VBox spacing="20" style="-fx-padding: 20;" alignment="TOP_CENTER">
+
+        <VBox spacing="5" maxWidth="1000">
+            <Label fx:id="pageTitle" text="Add Physical Room" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <HBox spacing="5" style="-fx-text-fill: #999;">
+                <Label text="Dashboard &gt; Physical Rooms &gt;" />
+                <Label fx:id="breadcrumbActive" text="Add Room" style="-fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+
+        <GridPane hgap="20" vgap="15" style="-fx-padding: 15; -fx-background-color: white; -fx-border-radius: 5;"
+                  GridPane.hgrow="ALWAYS" maxWidth="1000">
+
+            <columnConstraints>
+                <ColumnConstraints percentWidth="33.3" />
+                <ColumnConstraints percentWidth="33.3" />
+                <ColumnConstraints percentWidth="33.4" />
+            </columnConstraints>
+
+            <TextField fx:id="roomIdField" visible="false" managed="false" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+
+            <Label text="Room Number" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="roomNumberField" promptText="e.g., 101" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+
+            <Label text="Room Type" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <ComboBox fx:id="roomTypeCombo" promptText="Select a Room Type" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+            <Label text="Status" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+            <ComboBox fx:id="statusCombo" promptText="Select Status" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="Infinity"/>
+
+        </GridPane>
+
+        <HBox spacing="10" alignment="BOTTOM_RIGHT" maxWidth="1000">
+            <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #6c757d; -fx-text-fill: white;" />
+            <Button text="Save" onAction="#handleSaveRoom" style="-fx-background-color: #007bff; -fx-text-fill: white;" />
+        </HBox>
+
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" style="-fx-padding: 20; -fx-background-color: #f4f7fa;"
+      xmlns="http://javafx.com/javafx/25.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.hotelreservationfp.ui.controller.PaymentsController">
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Payments History" style="-fx-font-size: 24px; -fx-font-weight: bold;" HBox.hgrow="ALWAYS"/>
+        <Button text="Refresh" style="-fx-background-color: #5cb85c; -fx-text-fill: white;" onAction="#loadPayments"/>
+    </HBox>
+
+    <VBox style="-fx-background-color: white; -fx-padding: 15; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="paymentsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="invoiceIdColumn" text="Invoice ID" prefWidth="120" />
+                <TableColumn fx:id="customerNameColumn" text="Customer Name" prefWidth="200" />
+                <TableColumn fx:id="paymentTypeColumn" text="Payment Type" prefWidth="150" />
+                <TableColumn fx:id="paidDateColumn" text="Paid Date" prefWidth="150" />
+                <TableColumn fx:id="paidAmountColumn" text="Paid Amount" prefWidth="150" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

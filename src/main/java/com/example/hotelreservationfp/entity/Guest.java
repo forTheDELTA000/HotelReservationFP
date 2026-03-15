@@ -2,6 +2,7 @@ package com.example.hotelreservationfp.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "guest_tbl")
@@ -24,6 +25,7 @@ public class Guest {
     private String phone;
 
     @OneToMany(mappedBy = "guest")
+    @JsonIgnoreProperties("guest")
     private List<Booking> bookings;
 
     public Integer getGuestId() {

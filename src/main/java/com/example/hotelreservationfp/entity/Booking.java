@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Represents a hotel room booking record.
@@ -21,6 +22,7 @@ public class Booking {
     // Relationship to the guest who made the booking
     @ManyToOne
     @JoinColumn(name = "guest_id", nullable = false)
+    @JsonIgnoreProperties("bookings")
     private Guest guest;
 
     // Relationship to the booked room

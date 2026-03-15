@@ -18,12 +18,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable()) // CSRF is disabled, which is perfect for our Flutter POST requests later!
                 .authorizeHttpRequests(auth -> auth
 
                         // Allow all static assets for your admin and main themes
                         .requestMatchers(
-                                "/admin/assets/**", // Allow new admin theme assets
+                                "/admin/assets/**",
                                 "/main/**",
                                 "/css/**",
                                 "/js/**",
@@ -31,11 +31,12 @@ public class SecurityConfig {
                                 "/images/**"
                         ).permitAll()
 
-                        // Allow public client pages
+                        // Allow public client pages AND OUR NEW MOBILE API
                         .requestMatchers(
                                 "/", "/index", "/about-us", "/contact",
                                 "/rooms", "/services", "/bookreservation", "/process-booking",
-                                "/booking-success/**"
+                                "/booking-success/**",
+                                "/api/**" // <--- THE MAGIC FIX IS RIGHT HERE!
                         ).permitAll()
 
                         // Allow public admin utility pages
@@ -50,12 +51,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // This is your login page's URL
-
-                        // --- THIS IS THE FIX FOR YOUR REQUEST ---
-                        // After a successful login, send the user to /dashboard
+                        .loginPage("/login")
                         .defaultSuccessUrl("/dashboard", true)
-
                         .permitAll()
                 )
                 .logout(logout -> logout

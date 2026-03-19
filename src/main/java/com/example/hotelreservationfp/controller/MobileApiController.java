@@ -132,9 +132,7 @@ public class MobileApiController {
         stats.put("totalGuests", guestRepository.count());
 
         // Available Rooms (Using your exact WebController logic)
-        long totalRoomsInService = roomRepository.countByStatus("Available");
-        long occupiedToday = bookingRepository.countOccupiedRoomsForToday(LocalDate.now());
-        stats.put("availableRooms", totalRoomsInService - occupiedToday);
+        stats.put("availableRooms", roomRepository.countByStatus("Available"));
 
         // Total Revenue
         BigDecimal totalRevenue = paymentRepository.findTotalRevenue();
@@ -176,9 +174,28 @@ public class MobileApiController {
             if (updates.containsKey("guestPhone")) guest.setPhone((String) updates.get("guestPhone"));
             guestRepository.save(guest);
 
-            // 2. Update Booking safely
-            if (updates.containsKey("status")) booking.setStatus((String) updates.get("status"));
-            // Assuming dates arrive as strings (yyyy-MM-dd)
+            // 2. THE FIX: Smart Status Translator
+            if (updates.containsKey("status")) {
+                String flutterStatus = (String) updates.get("status"); // Flutter sends "Paid" or "Pending"
+
+                // A. Update the Payment table for accurate Revenue calculation
+                Payment payment = paymentRepository.findByBooking(booking);
+                if (payment != null) {
+                    payment.setStatus(flutterStatus);
+                    paymentRepository.save(payment);
+                }
+
+                // B. Sync the Booking table so Desktop and Mobile match
+                if ("Paid".equalsIgnoreCase(flutterStatus)) {
+                    booking.setStatus("Confirmed"); // If paid, booking is confirmed
+                } else if ("Pending".equalsIgnoreCase(flutterStatus)) {
+                    booking.setStatus("Pending");   // If payment is pending, booking is pending
+                } else {
+                    booking.setStatus(flutterStatus); // Fallback
+                }
+            }
+
+            // 3. Update Dates and Message
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             if (updates.containsKey("checkInDate")) booking.setCheckInDate(LocalDate.parse((String) updates.get("checkInDate"), formatter));
             if (updates.containsKey("checkOutDate")) booking.setCheckOutDate(LocalDate.parse((String) updates.get("checkOutDate"), formatter));
